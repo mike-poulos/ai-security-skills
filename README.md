@@ -1,8 +1,8 @@
 # Windval Security Skills
 
 AI skill files for cybersecurity advisory engagements, 
-built and maintained by Mike Poulos, Senior Technical 
-Advisor — Cybersecurity at Windval Technology Solutions.
+built and maintained by Mike Poulos, Executive  Advisor,
+Cybersecurity at Windval Technology Solutions.
 
 ## What Are Skill Files?
 
