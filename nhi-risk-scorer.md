@@ -1,7 +1,7 @@
 # Skill: NHI Risk Scorer
 
 ## Version
-1.1 — April 2026
+1.2 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity  
@@ -264,4 +264,11 @@ ASI03."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
-| 1.1 | April 2026 | Updated NHI ratio to 100:1, tightened agentic identity elevation language, added MITRE ATT&CK, MITRE ATLAS, NIST CSF 2.0, OWASP LLM Top 10, OWASP Agentic Top 10 framework mappings, added output voice instruction |
+| 1.1 | April 2026 | Updated NHI ratio to 100:1, tightened 
+agentic identity elevation language, added MITRE ATT&CK, 
+MITRE ATLAS, NIST CSF 2.0, OWASP LLM Top 10, OWASP 
+Agentic Top 10 framework mappings, added output voice 
+instruction |
+| 1.2 | April 2026 | Added agentic identity correlation 
+guidance to Step 1 and Known Limitations — finding from 
+validation run against synthetic inventory |
