@@ -1,4 +1,4 @@
-# Windval Security Skills
+# AI Security Skills
 
 AI skill files for cybersecurity advisory engagements, 
 built and maintained by Mike Poulos, Executive  Advisor,
