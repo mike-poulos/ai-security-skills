@@ -53,6 +53,11 @@ Identify and classify each identity in the input by type:
 - Agentic AI identity (MCP server credential, LLM 
   API key, agent service principal, skill execution 
   context)
+- Before scoring, cross-reference agentic AI identities 
+  across all identity sources in the inventory — a single 
+  agent workload may appear as multiple NHI entries 
+  (service principal + API key + OAuth grant). Treat 
+  correlated entries as a single blast radius assessment.
 
 ### Step 2 — Assess Privilege Scope
 For each NHI assess what it can access:
@@ -238,6 +243,15 @@ ASI03."
 - NERC CIP applicability requires BES Cyber Asset 
   classification — assumes classification is provided 
   or inferable from input
+- Agentic deployments frequently generate multiple NHI 
+  entries across identity systems that are not correlated 
+  in standard inventories — for example, a Copilot Studio 
+  agent may appear as both an Entra ID service principal 
+  and a separate application credential, each assessed 
+  independently but representing the same blast radius. 
+  Before scoring, correlate agentic identities across 
+  all identity sources to avoid underestimating combined 
+  scope and privilege.
 
 ## Related Skills
 - ai-bom-inventory.md (agentic identity enumeration)
