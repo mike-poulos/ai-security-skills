@@ -1,7 +1,7 @@
 # Skill: AI Bill of Materials (AI-BOM) Asset Inventory
 
 ## Version
-1.0 — April 2026
+1.1 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -218,6 +218,20 @@ Before classification, process all input sources:
   component with four discovery signals, not four
   components. More discovery signals increase
   classification confidence.
+- **Cross-Source Correlation for Unknown Components:**
+  When an unknown component is identified via DNS or
+  CASB with no matching known inventory entry, cross-
+  reference against all other discovery sources before
+  treating it as a new unknown component. A DNS hit
+  from an Engineering workstation pool with no matching
+  known application should be cross-referenced against
+  the endpoint management export for developer AI tools
+  installed on that subnet. A match reduces the finding
+  from unknown to ungoverned — still a governance gap
+  but a different remediation path. An unresolved
+  cross-reference after checking all sources confirms
+  a genuinely unknown component requiring immediate
+  investigation.
 - Flag components appearing in only one source
   as lower confidence — corroboration across
   multiple sources increases classification
@@ -294,6 +308,21 @@ For each component evaluate:
   behaves unexpectedly or is compromised, what
   is the maximum impact — undefined blast radius
   on any agentic component is Critical gap
+- **Adversarial Signal Assessment:** For any unknown
+  component discovered via DNS or CASB in a critical
+  network segment (OT DMZ, ICS network, production
+  infrastructure), assess whether the AI API calls
+  could represent adversarial activity rather than
+  ungoverned tool usage. An unknown process making
+  API calls to external LLM endpoints from an OT
+  DMZ subnet is equally consistent with an
+  AI-assisted command and control channel as with
+  an ungoverned tool deployment. Treat OT network
+  AI API egress as a potential security incident
+  requiring investigation, not just a governance
+  gap requiring remediation. Escalate to the OT
+  security team immediately — do not treat as
+  routine inventory finding.
 - **Human Override Mechanism:** For agentic
   components, is there a defined human
   intervention point — no override mechanism
@@ -552,3 +581,7 @@ ASI04, Article 10."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
+| 1.1 | April 2026 | Added adversarial signal assessment 
+for OT network AI egress and cross-source correlation 
+guidance — findings from validation run against 
+synthetic inventory |
