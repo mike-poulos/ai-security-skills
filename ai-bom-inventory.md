@@ -581,7 +581,4 @@ ASI04, Article 10."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
-| 1.1 | April 2026 | Added adversarial signal assessment 
-for OT network AI egress and cross-source correlation 
-guidance — findings from validation run against 
-synthetic inventory |
+| 1.1 | April 2026 | Added adversarial signal assessment for OT network AI egress and cross-source correlation guidance — findings from validation run against synthetic inventory |
