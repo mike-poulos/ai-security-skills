@@ -20,8 +20,8 @@ inputs, different client-specific outputs.
 
 | Skill | Domain | Status |
 |---|---|---|
-| [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity | In Development |
-| [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | Planned |
+| [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity | Complete |
+| [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | In Development |
 | [soc-decision-audit.md](soc-decision-audit.md) | SOC / Decision Transparency | Planned |
 | [ics-threat-brief.md](ics-threat-brief.md) | OT/ICS Threat Intelligence | Planned |
 | [nerc-cip-gap-analysis.md](nerc-cip-gap-analysis.md) | NERC CIP Compliance | Planned |
