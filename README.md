@@ -1,4 +1,4 @@
-# AI Security Skills
+# AI Agent Security Skills
 
 AI skill files for cybersecurity advisory engagements, 
 built and maintained by Mike Poulos, Executive  Advisor,
