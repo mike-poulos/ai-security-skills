@@ -1,7 +1,7 @@
 # Skill: NHI Risk Scorer
 
 ## Version
-1.2 — April 2026
+1.3 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity  
@@ -103,6 +103,17 @@ Assign a risk score to each NHI using this matrix:
 Elevate any NHI to Critical regardless of privilege 
 if it has direct access to OT/ICS environments, 
 production financial systems, or regulated data stores.
+
+Elevate any API key or credential to Critical if
+found in a code repository that also contains AI
+library imports — the credential is likely being
+submitted to an external AI model as part of a
+developer-built integration, creating simultaneous
+NHI governance failure and sensitive data exposure.
+Coding tool prompts contain credentials at 14x
+the rate of general AI usage — treat any credential
+in an AI-integrated repository as actively at risk,
+not theoretically at risk.
 
 Treat any agentic AI identity as High minimum. 
 Tool access chains and MCP server permissions are 
@@ -266,3 +277,4 @@ ASI03."
 | 1.0 | April 2026 | Initial release |
 | 1.1 | April 2026 | Updated NHI ratio to 100:1, tightened agentic identity elevation language, added MITRE ATT&CK, MITRE ATLAS, NIST CSF 2.0, OWASP LLM Top 10, OWASP Agentic Top 10 framework mappings, added output voice instruction |
 | 1.2 | April 2026 | Added agentic identity correlation guidance to Step 1 and Known Limitations — finding from validation run against synthetic inventory |
+| 1.3 | April 2026 | Added credential elevation rule for AI-integrated repositories — empirical data showing 14x credential exposure rate in coding tool contexts |
