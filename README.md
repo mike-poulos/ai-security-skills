@@ -22,7 +22,7 @@ inputs, different client-specific outputs.
 |---|---|---|
 | [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity | Complete |
 | [ai-bom-inventory.md](ai-bom-inventory.md) | AI BOM Asset Inventory | Complete |
-| [soc-decision-audit.md](soc-decision-audit.md) | SOC / Decision Transparency | Indevelopment |
+| [soc-decision-audit.md](soc-decision-audit.md) | SOC / Decision Transparency | In development |
 | [ics-threat-brief.md](ics-threat-brief.md) | OT/ICS Threat Intelligence | Planned |
 | [nerc-cip-gap-analysis.md](nerc-cip-gap-analysis.md) | NERC CIP Compliance | Planned |
 
@@ -43,6 +43,15 @@ vulnerability management, application security,
 container security, NHI security, GRC, NERC CIP compliance, 
 OT/ICS security, IEC 62443, NIST CSF, configuration 
 auditing, device profiling.
+
+## Design Principles
+
+These skill files are model-agnostic by design.
+They encode practitioner judgment as structured
+process, not model-specific configuration. They
+run on any capable LLM — Claude, GPT, Gemini,
+or local models — without modification. No single
+model dependency. No vendor lock-in.
 
 ## Related Work
 
