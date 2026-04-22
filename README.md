@@ -22,9 +22,11 @@ inputs, different client-specific outputs.
 |---|---|---|
 | [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity | Complete |
 | [ai-bom-inventory.md](ai-bom-inventory.md) | AI BOM Asset Inventory | Complete |
-| [soc-decision-audit.md](soc-decision-audit.md) | SOC / Decision Transparency | In development |
+| [soc-decision-audit.md](soc-decision-audit.md) | SOC / Decision Transparency | In Development |
 | [ics-threat-brief.md](ics-threat-brief.md) | OT/ICS Threat Intelligence | Planned |
 | [nerc-cip-gap-analysis.md](nerc-cip-gap-analysis.md) | NERC CIP Compliance | Planned |
+| [vuln-discovery-source-review.md](vuln-discovery-source-review.md) | AI-Assisted Vulnerability Discovery | Planned |
+| [vulnops-program-assessment.md](vulnops-program-assessment.md) | VulnOps Program Maturity | Planned |
 
 ## Domain Coverage
 
