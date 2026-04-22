@@ -1,7 +1,7 @@
 # Skill: AI Bill of Materials (AI-BOM) Asset Inventory
 
 ## Version
-1.1 — April 2026
+1.2 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -139,7 +139,21 @@ AI component inventory:
   groq.com. Each source IP hitting these endpoints
   is an AI component — correlate against known
   inventory. Unmatched source IPs are unknown
-  AI components requiring investigation.
+  AI components requiring investigation. Priority
+  correlation: Six applications account
+  for 92.6% of enterprise sensitive data exposure
+  in practice — ChatGPT (chat.openai.com), Microsoft
+  Copilot, Google Gemini, Claude (claude.ai), Harvey,
+  and Perplexity. ChatGPT alone accounts for 71.2%
+  of total exposure risk. When these endpoints appear
+  in DNS or CASB without a corresponding governed
+  corporate deployment, treat as highest-priority
+  unknown findings regardless of call volume.
+  Coding tools represent only 0.4% of AI usage
+  but 12.8% of those prompts contain credentials —
+  any DNS hit to coding AI endpoints from engineering
+  subnets warrants immediate NHI credential assessment
+  in parallel.
 - **CASB / SSE AI Category Reports:** Netskope,
   Zscaler, Palo Alto Prisma Access AI app category
   reports. Every AI tool accessed from the corporate
@@ -261,12 +275,41 @@ Assign each component to exactly one primary type:
   Copilot, Workday AI, Grammarly, and similar.
   Client may not have consciously adopted these —
   they shipped inside tools already in use.
-- **Agentic AI System:** Autonomous or
-  semi-autonomous agent that plans, reasons, and
-  takes actions — Copilot Studio agents, n8n
-  pipelines with AI nodes, LangChain agents,
-  AutoGPT instances, custom-built agents using
-  any agent framework
+- **Desktop Agent:** Locally installed agent that reads
+  files, executes commands, and interacts with device
+  resources — Claude desktop, Cursor, GitHub Copilot,
+  Windsurf, OpenClaw. Discovery: endpoint management
+  query (Intune/SCCM/Jamf). Blast radius: local device
+  plus all connected services and credentials accessible
+  from that device.
+- **Web Agent:** Browser or cloud-based agent with tool
+  connections that browses, executes code, and interacts
+  with external services — Claude with tool use, ChatGPT
+  with browsing, Gemini, Copilot with tool connections,
+  DeepSeek. Discovery: CASB and DNS. Key distinction:
+  tool connections transform a chatbot into an agent —
+  assess whether tool connections are enabled, not just
+  whether the tool is present.
+- **No-Code Builder Agent:** Business-user-built
+  automated AI workflow requiring no code — Copilot
+  Studio, Notion AI, Salesforce Agentforce, Zapier
+  with AI actions, Make with AI modules. Discovery:
+  Entra ID, Power Automate admin center, Copilot
+  Studio admin center, Agentforce admin console,
+  Notion workspace admin, business function interviews.
+  Highest-volume ungoverned agent category in most
+  enterprises. Ships the moment a business user clicks
+  publish — no code review, no security gate, no SDLC
+  checkpoint. IT visibility is typically zero until
+  AI-BOM discovery.
+- **Production Agent:** Autonomous agent deployed as
+  a cloud service at scale — LangChain, CrewAI,
+  AutoGen, and custom-built agent frameworks.
+  Discovery: code repository scan, cloud resource
+  inventory. Blast radius potentially unbounded
+  depending on tool access and loop iteration count.
+  Highest risk category, lowest visibility in most
+  organizations.
 - **Automation / Workflow with AI Node:** Workflow
   automation containing one or more AI steps but
   not fully autonomous — Power Automate flows with
@@ -288,7 +331,7 @@ Assign each component to exactly one primary type:
   LLM output caches
 
 ### Step 3 — Assess Each Component Against
-### Six Governance Dimensions
+### Governance Dimensions
 
 For each component evaluate:
 
@@ -307,7 +350,21 @@ For each component evaluate:
 - **Blast Radius Definition:** If this component
   behaves unexpectedly or is compromised, what
   is the maximum impact — undefined blast radius
-  on any agentic component is Critical gap
+  on any agentic component is Critical gap.
+  For agentic components assess blast radius as a
+  loop, not a single action. The Trigger → Reason
+  → Act → Observe → Repeat loop means each iteration
+  can take new actions, access new resources, and
+  produce new outputs autonomously. A blast radius
+  definition covering only a single action is
+  incomplete for any looping agent. Require
+  documentation of: maximum actions per loop
+  iteration, maximum loop count or time bound,
+  kill switch or circuit breaker mechanism, and
+  what human review occurs between iterations
+  if any. Absence of loop boundary documentation
+  on any production or no-code builder agent
+  is Critical gap.
 - **Adversarial Signal Assessment:** For any unknown
   component discovered via DNS or CASB in a critical
   network segment (OT DMZ, ICS network, production
@@ -333,6 +390,24 @@ For each component evaluate:
   Local models have no inherent logging — absence
   of compensating endpoint monitoring controls
   is Critical gap.
+- **Personal Account Usage:** Assess whether the
+  component is accessed via personal free-tier
+  accounts rather than corporate-licensed deployment.
+  Personal account usage means no IT visibility,
+  no audit trail, no policy enforcement, and data
+  may train public models. 16.9% of enterprise
+  sensitive data exposures flow through personal
+  accounts — the highest-risk blind spot in most
+  environments. Personal account usage of any tool
+  handling sensitive data is High gap minimum —
+  Critical if data is confidential, legal, financial,
+  or regulated. Remediation: provide the enterprise
+  equivalent and communicate its availability before
+  blocking — users on personal accounts are typically
+  doing so because the enterprise alternative is
+  unavailable, unknown, or inferior. Blocking without
+  providing an alternative drives usage to personal
+  devices with zero visibility.
 
 ### Step 4 — Flag Derived Artifact Risk
 For each component that produces output stored
@@ -448,7 +523,18 @@ Critical first.
 
 Write in crisp direct declarative sentences. No
 marketing language. No filler, minimal narrative.
-State findings and actions — nothing else.
+State findings and actions — nothing else. Remediation 
+posture: for shadow AI findings where
+a governed enterprise equivalent exists, the
+recommended action must include providing the
+enterprise alternative and communicating its
+availability — not just blocking the shadow tool.
+Blocking without an alternative drives usage to
+personal devices with zero visibility and zero
+audit trail. Save hard blocking for findings
+involving OT access, regulated data without any
+governance, or repeat high-risk behavior after
+guidance has been provided.
 
 ### Section 1 — Executive Summary
 Three sentences maximum. State total AI component
@@ -568,6 +654,15 @@ ASI04, Article 10."
   all inputs in accordance with client data
   handling requirements and do not retain
   beyond the engagement session
+- Discovery source lists are representative not
+  exhaustive — enterprise environments tracked
+  665+ distinct AI tools in 2025 and new tools
+  appear continuously. DNS endpoint filter lists
+  and CASB category definitions require quarterly
+  refresh at minimum. An AI-BOM is a point-in-time
+  snapshot with a shelf life measured in weeks in
+  fast-moving environments. Schedule recurring
+  discovery runs — not a one-time assessment.
 
 ## Related Skills
 - nhi-risk-scorer.md (identity risk assessment
@@ -582,3 +677,4 @@ ASI04, Article 10."
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
 | 1.1 | April 2026 | Added adversarial signal assessment for OT network AI egress and cross-source correlation guidance — findings from validation run against synthetic inventory |
+| 1.2 | April 2026 | Added four-agent taxonomy (Desktop/Web/No-Code Builder/Production), loop-based blast radius assessment, personal account usage governance dimension, priority DNS correlation list, remediation posture guidance, 665-tool shelf life limitation — empirical data and agent taxonomy |
