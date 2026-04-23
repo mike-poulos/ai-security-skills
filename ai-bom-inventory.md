@@ -1,7 +1,7 @@
 # Skill: AI Bill of Materials (AI-BOM) Asset Inventory
 
 ## Version
-1.2 — April 2026
+1.3 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -275,6 +275,16 @@ Assign each component to exactly one primary type:
   Copilot, Workday AI, Grammarly, and similar.
   Client may not have consciously adopted these —
   they shipped inside tools already in use.
+  Notable: Microsoft 365 Copilot agentic
+  capabilities in Word, Excel, and PowerPoint
+  are now generally available as the default
+  experience for M365 Copilot and M365 Premium
+  subscribers — processing documents,
+  restructuring data, and building presentations
+  autonomously. Any enterprise with M365 Copilot
+  licensing has agentic AI processing documents
+  by default. Flag as active embedded vendor AI
+  regardless of whether IT explicitly deployed it.
 - **Desktop Agent:** Locally installed agent that reads
   files, executes commands, and interacts with device
   resources — Claude desktop, Cursor, GitHub Copilot,
