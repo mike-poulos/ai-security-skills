@@ -1,14 +1,14 @@
 # AI Agent Security Skills
 
-AI agent skill files for cybersecurity advisory engagements, 
-built and maintained by Mike Poulos, Executive Advisor,
-Cybersecurity at Windval Technology Solutions.
+AI agent skill files for cybersecurity use cases built 
+and maintained by Mike Poulos, Cybersecurity Architect 
+& Advisor at Windval Technology Solutions.
 
 ## What Are Skill Files?
 Skill files are reusable markdown documents that encode 
 practitioner judgment into structured AI agent processes. 
 Each skill file defines a repeatable analysis workflow 
-that an AI agent executes against client-specific inputs, 
+that an AI agent executes against specific inputs, 
 producing consistent, auditable, framework-mapped outputs.
 
 These are not prompts. They are parameterizable procedures 
