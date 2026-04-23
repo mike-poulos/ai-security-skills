@@ -683,8 +683,10 @@ ASI04, Article 10."
   gap analysis for OT-adjacent AI components)
 
 ## Version History
+
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
 | 1.1 | April 2026 | Added adversarial signal assessment for OT network AI egress and cross-source correlation guidance — findings from validation run against synthetic inventory |
-| 1.2 | April 2026 | Added four-agent taxonomy (Desktop/Web/No-Code Builder/Production), loop-based blast radius assessment, personal account usage governance dimension, priority DNS correlation list, remediation posture guidance, 665-tool shelf life limitation — empirical data and agent taxonomy |
+| 1.2 | April 2026 | Added four-agent taxonomy (Desktop/Web/No-Code Builder/Production), loop-based blast radius assessment, personal account usage governance dimension, priority DNS correlation list, remediation posture guidance, 665-tool shelf life limitation — Harmonic Security empirical data and agent taxonomy |
+| 1.3 | April 2026 | Added M365 Copilot agentic default deployment note to Embedded Vendor AI type — Microsoft generally available announcement April 22 2026 |
