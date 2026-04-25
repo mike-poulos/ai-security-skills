@@ -21,10 +21,10 @@ inputs, different client-specific outputs.
 | Skill | Domain | Version | Status |
 |---|---|---|---|
 | [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity Risk Scoring | v1.3 | Complete |
-| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection | — | Planned |
+| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection | — | In Development |
 | [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | v1.3 | Complete |
 | [ai-surface-monitor.md](ai-surface-monitor.md) | AI Attack Surface Expansion | — | Planned |
-| [soc-decision-audit.md](soc-decision-audit.md) | SOC Decision Transparency | — | In Development |
+| [soc-decision-audit.md](soc-decision-audit.md) | SOC Decision Transparency | — | Planned |
 | [identity-access-monitor.md](identity-access-monitor.md) | Identity and Access Control Health | — | Planned |
 | [attacker-opportunity-index.md](attacker-opportunity-index.md) | Attacker Opportunity Index | — | Planned |
 | [patch-kev-monitor.md](patch-kev-monitor.md) | Patch Compliance vs KEV Catalog | — | Planned |
