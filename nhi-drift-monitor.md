@@ -1,7 +1,7 @@
 # Skill: NHI Drift Monitor
 
 ## Version
-1.1 — April 2026
+1.2 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -307,6 +307,16 @@ Elevate any CI/CD pipeline credential finding
 to Critical if the repository also contains AI
 library imports — coding tool contexts expose
 credentials at 14x the rate of general AI usage.
+Elevate any NHI to Critical if three or more
+governance failures are present simultaneously
+— ownership loss, scope expansion, and monitoring
+removal occurring together represent systematic
+governance breakdown, not isolated gaps. A single
+NHI with multiple concurrent failures has a higher
+effective blast radius than its individual gaps
+suggest because each failure removes a compensating
+control that would otherwise limit the impact of
+the others.
 
 ### Step 6 — Map to Compliance Frameworks
 Apply the same framework mapping as
@@ -330,7 +340,16 @@ posture established in the baseline assessment —
 a new ungoverned NHI with access to a Medium
 Impact BES Cyber Asset is both a governance gap
 and a CIP compliance event requiring documented
-remediation.
+remediation. When BES Cyber Asset classification has not been
+confirmed for an OT-adjacent NHI finding, treat
+the account as Medium Impact for remediation
+prioritization purposes until classification is
+confirmed. Do not defer remediation pending
+classification confirmation — the window between
+detection and remediation is the exposure window.
+Unclassified OT accounts with Critical governance
+gaps should be treated with the same urgency as
+confirmed Medium Impact BES Cyber Asset accounts.
 
 ### Step 7 — Produce Delta Report
 Structured output covering only what changed.
@@ -489,3 +508,4 @@ immediately. ASI03, LLM06, CIP-007-6."
 |---|---|---|
 | 1.0 | April 2026 | Initial release |
 | 1.1 | April 2026 | Added explicit IdP references (Okta, Ping Identity, JumpCloud, OneLogin, ForgeRock, Auth0), PAM platform references (CyberArk, BeyondTrust, Delinea, HashiCorp Vault, Azure Key Vault, AWS Secrets Manager, GCP Secret Manager), directory services (AWS IAM, GCP IAM, LDAP), CI/CD platforms (GitHub Actions, Azure DevOps, GitLab CI, Jenkins), SIEM platforms (Splunk, Sentinel, QRadar, Elastic), cloud IAM analytics (AWS IAM Access Advisor, Azure AD Access Reviews, GCP IAM Recommender), OT/ICS asset management (Claroty, Armis, Dragos, Nozomi), expanded BES Cyber Asset classification guidance in Known Limitations |
+| 1.2 | April 2026 | Added multiple simultaneous governance failure elevation rule to Step 5, added unclassified BES Cyber Asset interim treatment guidance to Step 6 NERC CIP section — findings from validation run against synthetic drift inventory |
