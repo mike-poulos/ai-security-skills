@@ -80,7 +80,8 @@ model dependency. No vendor lock-in.
 
 ## Related Work
 
-- The Silent Majority: NHI Security white paper (Windval, 2026)
+- Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
+  NHI Security Perspective Paper (Windval, 2026)
 - OT/ICS Threat Intelligence Pipeline — automated US-CERT/CISA feed
   analysis w/ NERC CIP and MITRE ATT&CK for ICS mapping
 
