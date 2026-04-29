@@ -1,7 +1,42 @@
+---
+name: ai-bom-inventory
+description: Discover, classify, and assess governance
+  posture of all AI components in an organization's
+  environment including unknown and ungoverned components.
+  Use when building an AI Bill of Materials, surfacing
+  shadow AI, assessing AI asset inventory, identifying
+  ungoverned automations, detecting local models invisible
+  to network controls, or mapping AI component risk to
+  EU AI Act, NERC CIP, NIST AI RMF, or OWASP frameworks.
+  Handles structured inventory inputs and unstructured
+  signal data including DNS logs, CASB reports, code
+  repository scans, endpoint management exports, and
+  interview notes. Includes self-inventory requirement —
+  the executing agent must appear in the output as
+  AI-BOM-000.
+license: MIT
+compatibility: Designed for Claude Code, OpenAI Codex,
+  and any Agent Skills compatible client. No system
+  packages required. No network access required.
+  Operates on provided inventory inputs and signal
+  data only.
+metadata:
+  author: mike-poulos
+  organization: Windval Technology Solutions
+  version: "1.3"
+  domain: cybersecurity
+  subdomain: ai-asset-inventory
+  skill-type: full-assessment
+  validated: "true"
+  validation-score: 34/34
+  compliance: EU AI Act, NERC CIP, NIST AI RMF, SOC2
+  discovery-tiers: "1,2,3"
+---
+
 # Skill: AI Bill of Materials (AI-BOM) Asset Inventory
 
 ## Version
-1.3 — April 2026
+1.4 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -533,8 +568,9 @@ Critical first.
 
 Write in crisp direct declarative sentences. No
 marketing language. No filler, minimal narrative.
-State findings and actions — nothing else. Remediation 
-posture: for shadow AI findings where
+State findings and actions — nothing else.
+
+Remediation posture: for shadow AI findings where
 a governed enterprise equivalent exists, the
 recommended action must include providing the
 enterprise alternative and communicating its
@@ -601,8 +637,9 @@ A high-quality output identifies components the
 client did not know existed, names specific data
 flows and output locations, and produces
 remediation actions specific enough to assign
-to an engineer or team. Crisp direct declarative sentences. 
-No marketing language. No filler, minimal narrative. 
+to an engineer or team. Crisp direct declarative
+sentences. No marketing language. No filler,
+minimal narrative.
 
 Poor output:
 "Several unknown AI tools were identified via
@@ -690,3 +727,4 @@ ASI04, Article 10."
 | 1.1 | April 2026 | Added adversarial signal assessment for OT network AI egress and cross-source correlation guidance — findings from validation run against synthetic inventory |
 | 1.2 | April 2026 | Added four-agent taxonomy (Desktop/Web/No-Code Builder/Production), loop-based blast radius assessment, personal account usage governance dimension, priority DNS correlation list, remediation posture guidance, 665-tool shelf life limitation — Harmonic Security empirical data and agent taxonomy |
 | 1.3 | April 2026 | Added M365 Copilot agentic default deployment note to Embedded Vendor AI type — Microsoft generally available announcement April 22 2026 |
+| 1.4 | April 2026 | Added YAML frontmatter — Agent Skills open standard compliance (agentskills.io) |
