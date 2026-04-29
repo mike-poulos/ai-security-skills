@@ -1,7 +1,38 @@
+---
+name: nhi-drift-monitor
+description: Detect and report changes in an organization's
+  non-human identity (NHI) environment since a previous
+  assessment baseline. Produces a delta report only — not
+  a full inventory assessment. Use when monitoring NHI
+  governance posture changes between scan windows, detecting
+  new ungoverned credentials, ownership loss, scope
+  expansion, rotation overdue, or agentic identity drift.
+  Requires a prior baseline from nhi-risk-scorer. Covers
+  Entra ID, Okta, CyberArk, Active Directory, AWS IAM,
+  HashiCorp Vault, GitHub Actions, and OT/ICS sources.
+license: MIT
+compatibility: Designed for Claude Code, OpenAI Codex,
+  and any Agent Skills compatible client. No system
+  packages required. No network access required.
+  Operates on provided baseline and current inventory
+  inputs only.
+metadata:
+  author: mike-poulos
+  organization: Windval Technology Solutions
+  version: "1.2"
+  domain: cybersecurity
+  subdomain: non-human-identity
+  skill-type: delta-monitor
+  prerequisite: nhi-risk-scorer
+  validated: "true"
+  validation-score: 13/13
+  compliance: NERC CIP, NIST 800-53, FedRAMP, SOC2
+---
+
 # Skill: NHI Drift Monitor
 
 ## Version
-1.2 — April 2026
+1.3 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -307,6 +338,7 @@ Elevate any CI/CD pipeline credential finding
 to Critical if the repository also contains AI
 library imports — coding tool contexts expose
 credentials at 14x the rate of general AI usage.
+
 Elevate any NHI to Critical if three or more
 governance failures are present simultaneously
 — ownership loss, scope expansion, and monitoring
@@ -340,7 +372,9 @@ posture established in the baseline assessment —
 a new ungoverned NHI with access to a Medium
 Impact BES Cyber Asset is both a governance gap
 and a CIP compliance event requiring documented
-remediation. When BES Cyber Asset classification has not been
+remediation.
+
+When BES Cyber Asset classification has not been
 confirmed for an OT-adjacent NHI finding, treat
 the account as Medium Impact for remediation
 prioritization purposes until classification is
@@ -509,3 +543,4 @@ immediately. ASI03, LLM06, CIP-007-6."
 | 1.0 | April 2026 | Initial release |
 | 1.1 | April 2026 | Added explicit IdP references (Okta, Ping Identity, JumpCloud, OneLogin, ForgeRock, Auth0), PAM platform references (CyberArk, BeyondTrust, Delinea, HashiCorp Vault, Azure Key Vault, AWS Secrets Manager, GCP Secret Manager), directory services (AWS IAM, GCP IAM, LDAP), CI/CD platforms (GitHub Actions, Azure DevOps, GitLab CI, Jenkins), SIEM platforms (Splunk, Sentinel, QRadar, Elastic), cloud IAM analytics (AWS IAM Access Advisor, Azure AD Access Reviews, GCP IAM Recommender), OT/ICS asset management (Claroty, Armis, Dragos, Nozomi), expanded BES Cyber Asset classification guidance in Known Limitations |
 | 1.2 | April 2026 | Added multiple simultaneous governance failure elevation rule to Step 5, added unclassified BES Cyber Asset interim treatment guidance to Step 6 NERC CIP section — findings from validation run against synthetic drift inventory |
+| 1.3 | April 2026 | Added YAML frontmatter — Agent Skills open standard compliance (agentskills.io) |
