@@ -13,16 +13,44 @@ that an AI agent executes against specific inputs,
 producing consistent, auditable, framework-mapped outputs.
 
 These are not prompts. They are parameterizable procedures
-that function like method calls — same process, different
+that function like method calls: same process, different
 inputs, different client-specific outputs.
+
+## Format and Compatibility
+
+Skill files in this repository follow the
+[Agent Skills open standard](https://agentskills.io)
+published by Anthropic in December 2025 and adopted
+by 32+ agent tools including Claude Code, OpenAI Codex,
+GitHub Copilot, Cursor, Gemini CLI, and JetBrains Junie.
+
+Each skill file includes YAML frontmatter with name,
+description, license, compatibility, and metadata fields
+that enable automatic discovery and activation by any
+Agent Skills compatible client. The body content defines
+the full practitioner workflow the agent executes.
+
+All skill files are model-agnostic. They run without
+modification on supported LLMs: Claude, GPT, Gemini,
+or local models. No single model dependency.
+No vendor lock-in.
+
+## Validation
+
+Completed skill files are validated against synthetic
+test inventories with deliberately planted governance
+gaps before any client use. Ground truth checklists
+confirm expected output scores. Test inventories are
+stored in the test-data/ directory alongside each
+skill file.
 
 ## Skill Files
 
 | Skill | Domain | Version | Status |
 |---|---|---|---|
-| [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity Risk Scoring | v1.3 | Complete |
-| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection |v1.2 | Complete |
-| [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | v1.3 | Complete |
+| [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity Risk Scoring | v1.4 | Complete |
+| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection |v1.3 | Complete |
+| [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | v1.4 | Complete |
 | [ai-surface-monitor.md](ai-surface-monitor.md) | AI Attack Surface Expansion | — | Planned |
 | [soc-decision-audit.md](soc-decision-audit.md) | SOC Decision Transparency | — | Planned |
 | [identity-access-monitor.md](identity-access-monitor.md) | Identity and Access Control Health | — | Planned |
