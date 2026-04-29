@@ -1,7 +1,32 @@
+---
+name: nhi-risk-scorer
+description: Score and prioritize non-human identity (NHI)
+  risk across service accounts, API keys, OAuth tokens,
+  certificates, and agentic AI identities. Use when
+  assessing NHI governance posture, producing a prioritized
+  remediation queue, or mapping identity risk to NERC CIP,
+  NIST, MITRE ATT&CK, or OWASP frameworks. Accepts
+  structured or unstructured NHI inventory input.
+license: MIT
+compatibility: Designed for Claude Code, OpenAI Codex,
+  and any Agent Skills compatible client. No system
+  packages required. No network access required.
+  Operates on provided inventory input only.
+metadata:
+  author: mike-poulos
+  organization: Windval Technology Solutions
+  version: "1.3"
+  domain: cybersecurity
+  subdomain: non-human-identity
+  validated: "true"
+  validation-score: 19/19
+  compliance: NERC CIP, NIST 800-53, FedRAMP, SOC2
+---
+
 # Skill: NHI Risk Scorer
 
 ## Version
-1.3 — April 2026
+1.4 — April 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity  
@@ -278,3 +303,4 @@ ASI03."
 | 1.1 | April 2026 | Updated NHI ratio to 100:1, tightened agentic identity elevation language, added MITRE ATT&CK, MITRE ATLAS, NIST CSF 2.0, OWASP LLM Top 10, OWASP Agentic Top 10 framework mappings, added output voice instruction |
 | 1.2 | April 2026 | Added agentic identity correlation guidance to Step 1 and Known Limitations — finding from validation run against synthetic inventory |
 | 1.3 | April 2026 | Added credential elevation rule for AI-integrated repositories — empirical data showing 14x credential exposure rate in coding tool contexts |
+| 1.4 | April 2026 | Added YAML frontmatter — Agent Skills open standard compliance (agentskills.io) |
