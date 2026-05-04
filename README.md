@@ -49,7 +49,7 @@ skill file.
 | Skill | Domain | Version | Status |
 |---|---|---|---|
 | [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity Risk Scoring | v1.4 | Complete |
-| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection |v1.3 | Complete |
+| [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection | v1.3 | Complete |
 | [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | v1.4 | Complete |
 | [ai-surface-monitor.md](ai-surface-monitor.md) | AI Attack Surface Expansion | — | Planned |
 | [soc-decision-audit.md](soc-decision-audit.md) | SOC Decision Transparency | — | Planned |
@@ -60,9 +60,11 @@ skill file.
 | [nerc-cip-gap-analysis.md](nerc-cip-gap-analysis.md) | NERC CIP Compliance Gap Analysis | — | Planned |
 | [vuln-discovery-source-review.md](vuln-discovery-source-review.md) | AI-Assisted Vulnerability Discovery | — | Planned |
 | [vulnops-program-assessment.md](vulnops-program-assessment.md) | VulnOps Program Maturity | — | Planned |
+| [agent-data-access-assessment.md](agent-data-access-assessment.md) | Agent Data Access Security Assessment | — | Planned |
+| [agent-architecture-governance.md](agent-architecture-governance.md) | Agent Architecture Governance | — | Planned |
+| [agent-human-override-design.md](agent-human-override-design.md) | Agent Human Override and Approval Design | — | Planned |
 
 ## Domain Coverage
-
 - Non-Human Identity (NHI) governance, risk scoring,
   and drift detection
 - AI Bill of Materials and agentic asset inventory
@@ -75,6 +77,9 @@ skill file.
 - NERC CIP compliance gap analysis
 - AI-assisted vulnerability discovery and source code analysis
 - VulnOps program maturity assessment
+- Agent data access security assessment
+- Agent architecture governance and design review
+- Agent human override and approval workflow design
 
 ## Practitioner Background
 
@@ -105,6 +110,7 @@ model dependency. No vendor lock-in.
 | April 2026 | Added monitoring skill files — nhi-drift-monitor, ai-surface-monitor, identity-access-monitor, patch-kev-monitor, attacker-opportunity-index |
 | April 2026 | Added vuln-discovery-source-review.md and vulnops-program-assessment.md |
 | April 2026 | Reorganized skill file table by domain grouping, added Version column |
+| May 2026 | Added skills (planned) agent-data-access-assessment, agent-architecture-governance, & agent-human-override-design |
 
 ## Related Work
 
