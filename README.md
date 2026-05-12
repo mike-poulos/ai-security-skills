@@ -125,9 +125,11 @@ artifacts for skill files and related agentic workflows.
 
 ## Related Work
 
+- From Chaos to Clarity: The Path to an Accurate and Continuously
+  Updated Asset Inventory — Windval Perspective Paper (2025)
 - Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
-  NHI Security Perspective Paper (Windval, 2026)
-- OT/ICS Threat Intelligence Pipeline — automated US-CERT/CISA feed
+  NHI Security — Windval Perspective Paper (2026)
+- OT/ICS Threat Intelligence Brief Pipeline — automated US-CERT/CISA feed
   analysis with NERC CIP and MITRE ATT&CK for ICS mapping
 
 ## License
