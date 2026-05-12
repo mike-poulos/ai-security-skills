@@ -65,6 +65,7 @@ skill file.
 | [agent-human-override-design.md](agent-human-override-design.md) | Agent Human Override and Approval Design | — | Planned |
 
 ## Domain Coverage
+
 - Non-Human Identity (NHI) governance, risk scoring,
   and drift detection
 - AI Bill of Materials and agentic asset inventory
@@ -100,6 +101,14 @@ run on any capable LLM — Claude, GPT, Gemini,
 or local models — without modification. No single
 model dependency. No vendor lock-in.
 
+## References
+
+Pipeline configurations, system prompts, and supporting
+artifacts for skill files and related agentic workflows.
+
+- [ics-threatintel-system-prompt.md](references/ics-threatintel-system-prompt.md) — OT/ICS threat intelligence system prompt extracted from production n8n pipeline. Includes executive summary structure, quality benchmark, findings table format, and pipeline configuration reference.
+- [ics-threatintel-pipeline.json](references/ics-threatintel-pipeline.json) — n8n workflow export for OT/ICS threat intelligence briefing pipeline. Import directly into any n8n instance to restore the production workflow.
+
 ## Version History
 
 | Date | Change |
@@ -110,14 +119,16 @@ model dependency. No vendor lock-in.
 | April 2026 | Added monitoring skill files — nhi-drift-monitor, ai-surface-monitor, identity-access-monitor, patch-kev-monitor, attacker-opportunity-index |
 | April 2026 | Added vuln-discovery-source-review.md and vulnops-program-assessment.md |
 | April 2026 | Reorganized skill file table by domain grouping, added Version column |
-| May 2026 | Added skills (planned) agent-data-access-assessment, agent-architecture-governance, & agent-human-override-design |
+| April 2026 | All three completed skill files updated to agentskills.io YAML frontmatter compliance |
+| May 2026 | Added planned skill files — agent-data-access-assessment, agent-architecture-governance, agent-human-override-design |
+| May 2026 | Added references/ directory — ICS threat intel system prompt and n8n pipeline JSON extracted and preserved from production deployment |
 
 ## Related Work
 
 - Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
   NHI Security Perspective Paper (Windval, 2026)
 - OT/ICS Threat Intelligence Pipeline — automated US-CERT/CISA feed
-  analysis w/ NERC CIP and MITRE ATT&CK for ICS mapping
+  analysis with NERC CIP and MITRE ATT&CK for ICS mapping
 
 ## License
 
