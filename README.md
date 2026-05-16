@@ -122,15 +122,16 @@ artifacts for skill files and related agentic workflows.
 | April 2026 | All three completed skill files updated to agentskills.io YAML frontmatter compliance |
 | May 2026 | Added planned skill files — agent-data-access-assessment, agent-architecture-governance, agent-human-override-design |
 | May 2026 | Added references/ directory — ICS threat intel system prompt and n8n pipeline JSON extracted and preserved from production deployment |
+| May 2026 | Added NHI Security Perspective Paper reference |
 
 ## Related Work
-
-- From Chaos to Clarity: The Path to an Accurate and Continuously
-  Updated Asset Inventory — Windval Perspective Paper (2025)
 - Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
-  NHI Security — Windval Perspective Paper (2026)
+  NHI Security — Perspective Paper (Windval, 2026) (https://www.windval.com/advisor-perspectives/non-human-identity-governance)
 - OT/ICS Threat Intelligence Brief Pipeline — automated US-CERT/CISA feed
   analysis with NERC CIP and MITRE ATT&CK for ICS mapping
+- From Chaos to Clarity: The Path to an Accurate and Continuously
+  Updated Asset Inventory — Perspective Paper (Windval, 2025) (https://www.windval.com/advisor-perspectives/chaos-to-clarity-aw9zt)
+
 
 ## License
 
