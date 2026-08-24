@@ -15,7 +15,7 @@ compatibility: Designed for Claude Code, OpenAI Codex,
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.3"
+  version: "1.4"
   domain: cybersecurity
   subdomain: non-human-identity
   validated: "true"
