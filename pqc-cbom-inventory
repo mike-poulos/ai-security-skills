@@ -1,4 +1,3 @@
-```markdown
 ---
 name: pqc-cbom-inventory
 description: Build and maintain a Post-Quantum Cryptography
@@ -48,11 +47,6 @@ discovery evidence, and establishes the specific migration
 dependencies required to move toward NIST-standardized
 quantum-resistant cryptography.
 
-The PQC-CBOM treats readiness as a derived outcome of
-inventory quality. Workflow order is fixed:
-
-> Inventory first. Validate second. Prioritize third. Migrate fourth.
-
 ## Background
 A single discovery platform cannot establish enterprise-wide
 PQC readiness. Network scanning identifies live cryptographic
@@ -69,17 +63,11 @@ any public-key dependency protecting data whose confidentiality
 shelf life exceeds the projected cryptographically relevant
 quantum computer timeline.
 
-The PQC-CBOM closes the gap by recording, at component level:
-- Technology or service that uses cryptography
-- Cryptographic function performed
-- Algorithms, protocols, certificates, keys, and libraries involved
-- Quantum-vulnerable classification
-- Discovery and validation source
-- Technical and business ownership
-- PQC capability or vendor roadmap status
-- Specific technical, operational, contractual, or lifecycle
-  migration dependency
-- Evidence supporting every recorded conclusion
+This skill encodes practitioner judgment for building and
+maintaining a component-level PQC-CBOM. The workflow order
+is fixed:
+
+> Inventory first. Validate second. Prioritize third. Migrate fourth.
 
 ## Parameters
 
@@ -102,13 +90,20 @@ The PQC-CBOM closes the gap by recording, at component level:
 - **PQC_CONTEXT:** NIST / CNSA 2.0 / contractual /
   internal policy / general readiness
 
-## Input Source Guidance
+## Process
 
-### Discovery Coverage Matrix
+### Step 1 — Establish Scope Using Discovery Coverage Matrix
+Define business services, technology domains, environments,
+and asset populations in scope. Identify data classifications
+and confidentiality shelf-life requirements where available.
+Use the Discovery Coverage Matrix below to identify the
+expected Primary and Strong sources for each technology area.
+Establish record granularity — a single product may generate
+multiple CBOM records when it performs multiple cryptographic
+functions.
 
-Use this matrix to scope discovery sources against each
-technology area. Ratings drive prioritization of collection
-effort and identification of coverage gaps.
+Rule: Do not treat a vendor or product name as sufficient
+evidence of cryptographic configuration.
 
 | Technology / Discovery Area | Tenable | PKI / CA | AppSec / SCA-SAST | IAM | Cloud / HSM-KMS | OT / ICS | Vendor / GRC | Discovery Notes |
 |---|---|---|---|---|---|---|---|---|
@@ -123,30 +118,6 @@ effort and identification of coverage gaps.
 | Cloud-managed certificates and service cryptography | Partial | Partial | Limited | Partial | Primary | None | Strong | Cloud-native inventory is strongest for managed keys, certificates, and service configuration; vendor evidence validates roadmap and service support. |
 | OT / ICS protocol and device cryptography | Limited | Limited | Limited | None | Limited | Primary | Strong | OT asset, architecture, and engineering sources are primary; vendor documentation is critical for embedded firmware and long-lifecycle devices. |
 | Vendor PQC roadmaps and attestations | None | None | None | Partial | Partial | Partial | Primary | Vendor/GRC is authoritative for collected roadmaps, attestations, support commitments, and contractual evidence. |
-
-### Discovery Source Effectiveness Scale
-
-| Rating | Meaning |
-|---|---|
-| Primary | Authoritative or best available discovery source for the technology area |
-| Strong | Substantial direct visibility; corroboration still required |
-| Partial | Useful but incomplete evidence |
-| Limited | Incidental, narrow, or scope-dependent visibility |
-| None | Not a practical discovery source for the technology area |
-
-## Process
-
-### Step 1 — Establish Scope and Record Boundaries
-Define business services, technology domains, environments,
-and asset populations in scope. Identify data classifications
-and confidentiality shelf-life requirements where available.
-Identify the expected authoritative source for each discovery
-area using the Discovery Coverage Matrix. Establish record
-granularity — a single product may generate multiple CBOM
-records when it performs multiple cryptographic functions.
-
-Rule: Do not treat a vendor or product name as sufficient
-evidence of cryptographic configuration.
 
 ### Step 2 — Ingest and Normalize Discovery Evidence
 For each input source:
@@ -391,4 +362,4 @@ by OT Security before any capital planning cycle."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | August 2026 | Initial PQC-CBOM inventory skill defining scope, data model, discovery reconciliation, migration dependencies, outputs, and decision rules |
-| 1.1 | August 2026 | Replaced source-centric Primary Discovery Sources table with technology-area Discovery Coverage Matrix; updated Process Step 1 and Step 7 and Output Section 3 to reference the matrix for scoping and gap analysis |
+| 1.1 | August 2026 | Replaced source-centric discovery table with technology-area Discovery Coverage Matrix; aligned structure and voice to nhi-risk-scorer pattern for GitHub rendering and Agent Skills compliance |
