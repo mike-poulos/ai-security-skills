@@ -51,6 +51,7 @@ skill file.
 | [nhi-risk-scorer.md](nhi-risk-scorer.md) | Non-Human Identity Risk Scoring | v1.4 | Complete |
 | [nhi-drift-monitor.md](nhi-drift-monitor.md) | Non-Human Identity Drift Detection | v1.3 | Complete |
 | [ai-bom-inventory.md](ai-bom-inventory.md) | AI Asset Inventory | v1.4 | Complete |
+| [pqc-cbom-inventory](pqc-cbom-inventory) | Post-Quantum Cryptography CBOM | v1.0 | Complete |
 | [ai-surface-monitor.md](ai-surface-monitor.md) | AI Attack Surface Expansion | — | Planned |
 | [soc-decision-audit.md](soc-decision-audit.md) | SOC Decision Transparency | — | Planned |
 | [identity-access-monitor.md](identity-access-monitor.md) | Identity and Access Control Health | — | Planned |
@@ -69,6 +70,9 @@ skill file.
 - Non-Human Identity (NHI) governance, risk scoring,
   and drift detection
 - AI Bill of Materials and agentic asset inventory
+- Post-Quantum Cryptography Cryptographic Bill of Materials
+  (PQC-CBOM) — quantum-vulnerable dependency inventory,
+  discovery reconciliation, and migration dependency mapping
 - AI attack surface monitoring
 - SOC decision transparency and audit trail
 - Identity and access control health monitoring
@@ -90,7 +94,8 @@ SIEM/SOC, EDR/EPP, CNAPP/cloud security, FedRAMP,
 vulnerability management, application security,
 container security, NHI security, GRC, NERC CIP compliance,
 OT/ICS security, IEC 62443, NIST CSF, configuration
-auditing, device profiling.
+auditing, device profiling, cryptographic asset management,
+post-quantum cryptography migration.
 
 ## Design Principles
 
@@ -123,6 +128,7 @@ artifacts for skill files and related agentic workflows.
 | May 2026 | Added planned skill files — agent-data-access-assessment, agent-architecture-governance, agent-human-override-design |
 | May 2026 | Added references/ directory — ICS threat intel system prompt and n8n pipeline JSON extracted and preserved from production deployment |
 | May 2026 | Added NHI Security Perspective Paper reference |
+| August 2026 | Added pqc-cbom-inventory v1.0 — Post-Quantum Cryptography Cryptographic Bill of Materials (PQC-CBOM) skill for quantum-vulnerable dependency inventory, multi-source reconciliation, and migration dependency mapping |
 
 ## Related Work
 - Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
