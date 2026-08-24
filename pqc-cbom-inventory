@@ -1,0 +1,383 @@
+---
+name: pqc-cbom-inventory
+description: Build and maintain a Post-Quantum Cryptography
+  Cryptographic Bill of Materials (PQC-CBOM) across IT,
+  cloud, applications, identity, network, PKI, OT/ICS, and
+  third-party services. Identifies quantum-vulnerable
+  cryptographic dependencies, discovery evidence, ownership,
+  PQC support status, and migration dependencies. Use when
+  establishing cryptographic inventory for PQC migration
+  planning, reconciling network scan output with PKI and
+  application sources, assessing quantum risk to long-lived
+  data, mapping migration blockers, or producing evidence-
+  based readiness posture against NIST PQC standards and
+  CNSA 2.0. Handles structured inventories (CSV, JSON, XLSX)
+  and unstructured technical documentation, scan output,
+  architecture records, vendor attestations, and interview
+  notes.
+license: MIT
+compatibility: Designed for Claude Code, OpenAI Codex, and
+  any Agent Skills compatible client. No system packages
+  required. No network access required. Operates on provided
+  inventory inputs and signal data only.
+metadata:
+  author: mike-poulos
+  organization: Windval Technology Solutions
+  version: "1.0"
+  domain: cybersecurity
+  subdomain: post-quantum-cryptography
+  skill-type: full-assessment
+  validated: "false"
+  validation-score: pending
+  compliance: NIST PQC, CNSA 2.0, NIST SP 800-208, NIST IR 8413
+  discovery-tiers: "1,2,3"
+---
+
+# Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
+
+## Version
+1.0 — August 2026
+
+## Author
+Mike Poulos, Executive Advisor — Cybersecurity
+Windval Technology Solutions
+
+## Purpose
+Create a defensible, evidence-based Cryptographic Bill of
+Materials focused on Post-Quantum Cryptography readiness.
+Inventories where cryptography is used, identifies quantum-
+vulnerable public-key dependencies, records ownership and
+discovery evidence, and establishes the specific migration
+dependencies required to move toward NIST-standardized
+quantum-resistant cryptography.
+
+The PQC-CBOM treats readiness as a derived outcome of
+inventory quality. Workflow order is fixed:
+
+> Inventory first. Validate second. Prioritize third. Migrate fourth.
+
+## Background
+A single discovery platform cannot establish enterprise-wide
+PQC readiness. Network scanning identifies live cryptographic
+services and presented certificates. It does not establish
+the complete CA hierarchy, embedded libraries, hardcoded
+application cryptography, HSM/KMS configuration, identity
+signing dependencies, OT/ICS crypto, or vendor migration
+roadmaps.
+
+Most organizations hold long-lived sensitive data, trust
+anchors, and systems with multi-year hardware or firmware
+lifecycles. Harvest-now-decrypt-later exposure is real for
+any public-key dependency protecting data whose confidentiality
+shelf life exceeds the projected cryptographically relevant
+quantum computer timeline.
+
+The PQC-CBOM closes the gap by recording, at component level:
+- Technology or service that uses cryptography
+- Cryptographic function performed
+- Algorithms, protocols, certificates, keys, and libraries involved
+- Quantum-vulnerable classification
+- Discovery and validation source
+- Technical and business ownership
+- PQC capability or vendor roadmap status
+- Specific technical, operational, contractual, or lifecycle
+  migration dependency
+- Evidence supporting every recorded conclusion
+
+## Parameters
+
+- **INPUT:** One or more of the following — network cryptographic
+  scan output, certificate inventory or CA export, application
+  dependency inventory, HSM/KMS inventory, cloud cryptographic
+  service export, IAM/federation configuration inventory,
+  OT/ICS asset or architecture inventory, vendor product
+  inventory or roadmap evidence, CMDB or asset inventory
+  containing technology ownership. Partial input is the normal
+  starting condition — gaps in input are findings.
+- **ENVIRONMENT:** enterprise / cloud / network / application /
+  identity / PKI / OT/ICS / hybrid / all
+- **SCOPE:** Technology domain, business unit, environment,
+  application portfolio, or asset group
+- **DISCOVERY_DEPTH:** baseline / validated / reconciled
+- **OUTPUT_FORMAT:** markdown / CSV / JSON / XLSX-ready table
+- **EVIDENCE_STANDARD:** observed / authoritative /
+  vendor-attested / owner-validated
+- **PQC_CONTEXT:** NIST / CNSA 2.0 / contractual /
+  internal policy / general readiness
+
+## Input Source Guidance
+
+### Primary Discovery Sources
+
+| Source | Best Used For | Primary Limitation |
+|---|---|---|
+| Network Crypto Discovery (Tenable, etc.) | Live network-facing TLS services, negotiated cryptographic posture, leaf certificates presented by scanned services | Does not establish complete PKI, embedded application crypto, HSM/KMS configuration, OT device crypto, or vendor readiness |
+| PKI / CA Source | Root/intermediate hierarchy, issued certificates, templates, issuance policy, enrollment, renewal, revocation | Does not prove where every certificate is actively presented |
+| AppSec / SCA / SAST | Embedded libraries, statically linked components, crypto APIs, hardcoded algorithm use | Limited visibility into appliances, managed services, PKI, and vendor-controlled implementations |
+| IAM / Federation | Federation signing, token signing, certificate authentication, identity trust, authentication configuration | Primarily limited to identity platforms and connected trust relationships |
+| Cloud / HSM / KMS | Managed keys, certificates, HSM/KMS configuration, key operations, cloud-native cryptographic services | Limited to assets managed within the specific platform |
+| OT / ICS Inventory | Industrial protocols, embedded devices, gateways, firmware, operational architecture, site context | Requires specialized inventories, safe collection methods, and vendor evidence |
+| Vendor / GRC | Product roadmaps, attestations, support commitments, contracts, third-party dependencies | Claims must be validated against deployed versions and technical configuration |
+| CMDB / Asset Management | Product footprint, service mapping, lifecycle, ownership, business context | Usually lacks implementation-level algorithm, certificate, key, and library detail |
+
+### Discovery Source Effectiveness Scale
+
+| Rating | Meaning |
+|---|---|
+| Primary | Authoritative or best available discovery source |
+| Strong | Substantial direct visibility; corroboration still required |
+| Partial | Useful but incomplete evidence |
+| Limited | Incidental, narrow, or scope-dependent visibility |
+| None | Not a practical discovery source for the technology area |
+
+## Process
+
+### Step 1 — Establish Scope and Record Boundaries
+Define business services, technology domains, environments,
+and asset populations in scope. Identify data classifications
+and confidentiality shelf-life requirements where available.
+Identify the expected authoritative source for each discovery
+area. Establish record granularity — a single product may
+generate multiple CBOM records when it performs multiple
+cryptographic functions.
+
+Rule: Do not treat a vendor or product name as sufficient
+evidence of cryptographic configuration.
+
+### Step 2 — Ingest and Normalize Discovery Evidence
+For each input source:
+- Record source type, collection date, scope, and owner
+- Extract technology, version, protocol, certificate, key,
+  algorithm, and cryptographic-function details
+- Normalize aliases and naming conventions
+- Preserve the original evidence reference
+- Mark unavailable values as `Unknown`; do not infer
+  unsupported technical details
+
+### Step 3 — Create Component-Level PQC-CBOM Records
+Create one record for each material cryptographic
+implementation. Examples:
+- Load balancer TLS listener
+- Root or issuing CA
+- Application-bundled OpenSSL library
+- SAML token-signing certificate
+- HSM key used for code signing
+- IPsec/IKE profile on a VPN gateway
+- OPC UA server certificate and security policy
+- Firmware-signing process for an OT device family
+
+### Step 4 — Classify Cryptographic Function
+Assign one or more functions:
+- Key establishment / key exchange
+- Digital signature
+- Authentication
+- Certificate trust
+- Code or firmware signing
+- Encryption at rest
+- Encryption in transit
+- Key wrapping / key protection
+- Hashing / integrity
+- Random-number generation
+- Other / Unknown
+
+### Step 5 — Identify Quantum-Vulnerable Dependencies
+Record the observed algorithm and classify whether the
+public-key dependency is quantum-vulnerable.
+
+Common migration targets:
+- RSA key establishment or signatures
+- ECDSA signatures
+- ECDH key agreement
+- Finite-field Diffie-Hellman
+- Vendor-specific public-key implementations requiring validation
+
+Do not automatically classify symmetric encryption or hashing
+as requiring replacement. Inspect any associated public-key
+exchange, wrapping, certificate, signing, or authentication
+dependency.
+
+### Step 6 — Map the PQC Target
+| Current Function | PQC Target Category |
+|---|---|
+| Public-key key establishment | ML-KEM or approved hybrid key-establishment mechanism |
+| Digital signatures | ML-DSA, SLH-DSA, or another approved signature standard |
+| Certificate signing | PQC-capable certificate and PKI implementation |
+| Code / firmware signing | PQC-capable signing workflow and validation chain |
+| Symmetric encryption | Retain appropriate symmetric algorithm; validate key-establishment and key-wrapping dependencies |
+| Hashing / integrity | Retain appropriate hash algorithm; validate signature and certificate dependencies |
+
+Record `Unknown` when the vendor, protocol, or architecture
+has not selected a target.
+
+### Step 7 — Reconcile Discovery Sources
+Reconciliation is mandatory where multiple sources cover the
+same cryptographic asset.
+
+Examples:
+- Match live leaf certificates to CA-issued records using
+  serial number or thumbprint
+- Match an SCA-discovered library to the deployed application
+  version and owner
+- Match KMS key records to consuming applications and services
+- Match vendor roadmap claims to the deployed product and
+  firmware version
+- Match OT asset records to protocol, gateway, and certificate
+  observations
+
+Classify reconciliation outcomes:
+- `Validated` — discovery and authoritative records agree
+- `Shadow` — observed live but absent from the expected system of record
+- `Stale` — present in the system of record but no longer observed or confirmed in use
+- `Conflicting` — sources disagree
+- `Unresolved` — insufficient evidence
+
+### Step 8 — Identify Migration Dependencies
+Assign the primary migration dependency:
+- Configuration change
+- Protocol uplift
+- Software/library upgrade
+- Application refactor
+- Certificate reissuance
+- PKI hierarchy redesign
+- HSM/KMS upgrade
+- Hardware or firmware replacement
+- Vendor roadmap dependency
+- Third-party contract dependency
+- Compatibility/interoperability testing
+- Decommission
+- Unknown
+
+Record the specific technical or ownership constraint.
+Do not collapse dependencies into a vague maturity score.
+
+### Step 9 — Assess Risk Context
+Document available evidence for:
+- Data sensitivity
+- Confidentiality shelf life
+- External exposure
+- Trust-chain or blast-radius significance
+- System criticality
+- Replacement complexity
+- Vendor or lifecycle constraint
+- Safety and availability constraints for OT/ICS
+
+Where evidence is incomplete, leave the field `Unknown`
+and create a follow-up action.
+
+### Step 10 — Determine Disposition and Priority
+Recommended dispositions:
+- Retain and migrate
+- Upgrade
+- Refactor
+- Replace
+- Isolate
+- Apply compensating control
+- Decommission
+- Investigate
+
+Prioritization order (evidence-based):
+1. Long-lived sensitive data and HNDL exposure
+2. High-blast-radius trust infrastructure (roots, intermediates,
+   identity signing, code signing)
+3. Internet-facing or externally connected services
+4. Systems with long hardware, firmware, or procurement lifecycles
+5. Vendor-controlled or unsupported dependencies
+6. Migration prerequisites that block multiple downstream systems
+
+### Step 11 — Produce Outputs
+Generate the structured outputs defined in Output Format.
+Report deltas on subsequent runs rather than treating the
+inventory as a one-time assessment.
+
+## Output Format
+
+Write in crisp direct declarative sentences. No marketing
+language. No filler, minimal narrative. State findings and
+actions — nothing else.
+
+### Section 1 — Executive Summary
+Three sentences maximum. State scope assessed, discovery
+sources used, material coverage gaps, highest-risk quantum-
+vulnerable dependencies, and major migration blockers.
+
+### Section 2 — PQC-CBOM Inventory
+Component-level system of record ordered by priority:
+
+| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source | Validation Source | Owner | Migration Dependency | Disposition | Priority | Status |
+
+### Section 3 — Discovery Coverage Matrix
+| Technology Area | Primary Source | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
+
+### Section 4 — Reconciliation Findings
+| Record / Asset | Source A | Source B | Result | Risk | Required Action | Owner |
+
+### Section 5 — Migration Dependency Register
+| Technology | Dependency | Constraint | Prerequisite | Owner | Vendor | Target State | Status |
+
+### Section 6 — Owner Action Queue
+Evidence gaps and remediation actions by accountable team.
+Every actionable record requires a named technical owner.
+
+## Quality Benchmark
+A high-quality output identifies quantum-vulnerable
+dependencies the client did not fully map, names specific
+migration blockers with owners, and produces actions
+specific enough to assign to an engineer or team. Crisp
+direct declarative sentences. No marketing language. No
+filler, minimal narrative.
+
+Poor output:
+"Several quantum-vulnerable algorithms were identified.
+PQC migration planning should begin."
+
+Good output:
+"Network scan identified 47 live TLS services presenting
+RSA-2048 certificates. 19 of those certificates are absent
+from the CA inventory (Shadow). Code-signing HSM partition
+uses RSA-4096 with no vendor PQC roadmap linked to the
+deployed firmware version. OT gateway firmware (v3.2.1)
+relies on ECDSA P-256; vendor attestation states PQC support
+in v4.x only — current hardware reaches end-of-support
+Q2 2028. Recommend immediate CA reconciliation for the 19
+shadow certificates, HSM firmware upgrade assessment owned
+by PKI Engineering, and OT vendor roadmap validation owned
+by OT Security before any capital planning cycle."
+
+## Known Limitations
+- Network scan output alone is never a complete PQC-CBOM
+- Vendor roadmap claims are evidence inputs, not proof of
+  deployed capability
+- Symmetric algorithms and hashes are not automatically
+  migration targets; associated public-key dependencies must
+  be inspected
+- OT/ICS discovery is constrained by safety and availability
+  requirements — specialized methods and vendor evidence are
+  required
+- Locally embedded or hardcoded cryptography invisible to
+  network and PKI sources requires application or firmware
+  analysis
+- Confidentiality shelf-life and HNDL exposure assessments
+  require data classification inputs that are frequently
+  incomplete
+- An unknown algorithm, owner, or migration path is itself
+  a finding requiring follow-up
+- The PQC-CBOM has a shelf life; revalidate after upgrades,
+  certificate rotation, architecture changes, or vendor
+  roadmap updates
+- This skill processes client data including potentially
+  sensitive inventory information, scan output, and interview
+  notes — handle all inputs in accordance with client data
+  handling requirements and do not retain beyond the
+  engagement session
+
+## Related Skills
+- ai-bom-inventory.md (structural pattern and inventory
+  discipline reference)
+- nhi-risk-scorer.md (identity risk assessment for
+  cryptographic signing and authentication components)
+
+## Version History
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | August 2026 | Initial PQC-CBOM inventory skill defining scope, data model, discovery reconciliation, migration dependencies, outputs, and decision rules |
