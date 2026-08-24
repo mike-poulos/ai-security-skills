@@ -1,19 +1,21 @@
 ---
 name: pqc-cbom-inventory
-description: Build and maintain a Post-Quantum Cryptography
+description: Build and maintain a living Post-Quantum Cryptography
   Cryptographic Bill of Materials (PQC-CBOM) across IT,
   cloud, applications, identity, network, PKI, OT/ICS, and
   third-party services. Identifies quantum-vulnerable
   cryptographic dependencies, discovery evidence, ownership,
   PQC support status, and migration dependencies. Use when
-  establishing cryptographic inventory for PQC migration
-  planning, reconciling network scan output with PKI and
-  application sources, assessing quantum risk to long-lived
-  data, mapping migration blockers, or producing evidence-
-  based readiness posture against NIST PQC standards and
-  CNSA 2.0. Accepts structured inventories (CSV, JSON, XLSX)
-  and unstructured technical documentation, scan output,
-  architecture records, vendor attestations, and interview notes.
+  establishing or operating a continuous cryptographic
+  inventory for PQC migration planning, reconciling multi-
+  source discovery evidence, detecting drift, assessing
+  quantum risk to long-lived data, mapping migration blockers,
+  or producing evidence-based readiness posture against NIST
+  PQC standards and CNSA 2.0. Accepts structured inventories
+  (CSV, JSON, XLSX) and unstructured technical documentation,
+  scan output, architecture records, vendor attestations, and
+  interview notes. Treats the CBOM as a versioned, delta-driven
+  system of record — not a point-in-time report.
 license: MIT
 compatibility: Designed for Claude Code, OpenAI Codex,
   and any Agent Skills compatible client. No system
@@ -22,7 +24,7 @@ compatibility: Designed for Claude Code, OpenAI Codex,
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.1"
+  version: "1.2"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
@@ -32,42 +34,55 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.1 — August 2026
+1.2 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
 Windval Technology Solutions
 
 ## Purpose
-Create a defensible, evidence-based Cryptographic Bill of
-Materials focused on Post-Quantum Cryptography readiness.
-Inventories where cryptography is used, identifies quantum-
-vulnerable public-key dependencies, records ownership and
-discovery evidence, and establishes the specific migration
-dependencies required to move toward NIST-standardized
-quantum-resistant cryptography.
+Create and operate a living, evidence-based Cryptographic
+Bill of Materials focused on Post-Quantum Cryptography
+readiness. The PQC-CBOM is a versioned system of record —
+not a point-in-time assessment report.
 
-## Background
-A single discovery platform cannot establish enterprise-wide
-PQC readiness. Network scanning identifies live cryptographic
-services and presented certificates. It does not establish
-the complete CA hierarchy, embedded libraries, hardcoded
-application cryptography, HSM/KMS configuration, identity
-signing dependencies, OT/ICS crypto, or vendor migration
-roadmaps.
+It inventories where cryptography is used, identifies
+quantum-vulnerable public-key dependencies, records
+ownership and discovery evidence, tracks migration
+dependencies, and detects drift over time.
 
-Most organizations hold long-lived sensitive data, trust
-anchors, and systems with multi-year hardware or firmware
-lifecycles. Harvest-now-decrypt-later exposure is real for
-any public-key dependency protecting data whose confidentiality
-shelf life exceeds the projected cryptographically relevant
-quantum computer timeline.
-
-This skill encodes practitioner judgment for building and
-maintaining a component-level PQC-CBOM. The workflow order
-is fixed:
+Readiness is a derived outcome of inventory quality and
+maintenance discipline. Workflow order remains fixed:
 
 > Inventory first. Validate second. Prioritize third. Migrate fourth.
+> Then continuously reconcile and report deltas.
+
+## Background
+A single discovery platform or one-time assessment cannot
+establish enterprise-wide PQC readiness. Network scanning,
+CA exports, SCA results, HSM inventories, and vendor
+roadmaps each see only part of the surface. Point-in-time
+reports go stale the moment a certificate rotates, a
+library is upgraded, firmware is patched, or a vendor
+updates its PQC roadmap.
+
+Living SBOMs solved the same problem for software
+dependencies by shifting from periodic reports to
+continuous, versioned, delta-driven inventories integrated
+into change processes. The PQC-CBOM applies the same model
+to cryptographic dependencies.
+
+The CBOM closes the gap by maintaining, at component level:
+- Technology or service that uses cryptography
+- Cryptographic function performed
+- Algorithms, protocols, certificates, keys, and libraries
+- Quantum-vulnerable classification
+- Discovery and validation source + evidence date
+- Technical and business ownership
+- PQC capability or vendor roadmap status
+- Specific migration dependency
+- Record version and last-reconciled date
+- Drift status relative to prior version
 
 ## Parameters
 
@@ -76,14 +91,15 @@ is fixed:
   dependency inventory, HSM/KMS inventory, cloud cryptographic
   service export, IAM/federation configuration inventory,
   OT/ICS asset or architecture inventory, vendor product
-  inventory or roadmap evidence, CMDB or asset inventory
-  containing technology ownership. Partial input is the normal
-  starting condition — gaps in input are findings.
+  inventory or roadmap evidence, CMDB or asset inventory,
+  prior CBOM version for delta analysis. Partial input is
+  the normal starting condition — gaps in input are findings.
 - **ENVIRONMENT:** enterprise / cloud / network / application /
   identity / PKI / OT/ICS / hybrid / all
 - **SCOPE:** Technology domain, business unit, environment,
   application portfolio, or asset group
 - **DISCOVERY_DEPTH:** baseline / validated / reconciled
+- **MODE:** initial | delta | continuous
 - **OUTPUT_FORMAT:** markdown / CSV / JSON / XLSX-ready table
 - **EVIDENCE_STANDARD:** observed / authoritative /
   vendor-attested / owner-validated
@@ -96,8 +112,8 @@ is fixed:
 Define business services, technology domains, environments,
 and asset populations in scope. Identify data classifications
 and confidentiality shelf-life requirements where available.
-Use the Discovery Coverage Matrix below to identify the
-expected Primary and Strong sources for each technology area.
+Use the Discovery Coverage Matrix to identify expected
+Primary and Strong sources for each technology area.
 Establish record granularity — a single product may generate
 multiple CBOM records when it performs multiple cryptographic
 functions.
@@ -129,9 +145,16 @@ For each input source:
 - Mark unavailable values as `Unknown`; do not infer
   unsupported technical details
 
-### Step 3 — Create Component-Level PQC-CBOM Records
+When MODE = delta or continuous, also ingest the prior
+CBOM version for comparison.
+
+### Step 3 — Create or Update Component-Level PQC-CBOM Records
 Create one record for each material cryptographic
-implementation. Examples:
+implementation. When a prior version exists, update
+existing records and flag new, changed, or removed
+dependencies.
+
+Examples of record subjects:
 - Load balancer TLS listener
 - Root or issuing CA
 - Application-bundled OpenSSL library
@@ -140,6 +163,10 @@ implementation. Examples:
 - IPsec/IKE profile on a VPN gateway
 - OPC UA server certificate and security policy
 - Firmware-signing process for an OT device family
+
+Every record must carry: Record ID, last-reconciled date,
+CBOM version, and drift status (New / Unchanged / Changed /
+Removed / Unresolved).
 
 ### Step 4 — Classify Cryptographic Function
 Assign one or more functions:
@@ -184,29 +211,26 @@ dependency.
 Record `Unknown` when the vendor, protocol, or architecture
 has not selected a target.
 
-### Step 7 — Reconcile Discovery Sources
+### Step 7 — Reconcile Discovery Sources and Detect Drift
 Reconciliation is mandatory where multiple sources cover the
 same cryptographic asset. Use the Discovery Coverage Matrix
-to identify which sources should be Primary or Strong for
-each technology area.
+to identify which sources should be Primary or Strong.
 
-Examples:
-- Match live leaf certificates to CA-issued records using
-  serial number or thumbprint
-- Match an SCA-discovered library to the deployed application
-  version and owner
-- Match KMS key records to consuming applications and services
-- Match vendor roadmap claims to the deployed product and
-  firmware version
-- Match OT asset records to protocol, gateway, and certificate
-  observations
+When a prior CBOM version is supplied, perform delta analysis:
+- New quantum-vulnerable dependencies
+- Algorithm or protocol changes
+- Ownership changes
+- Migration dependency changes
+- Records that disappeared (possible decommission or loss of visibility)
+- Records that became Shadow or Stale
 
 Classify reconciliation outcomes:
 - `Validated` — discovery and authoritative records agree
 - `Shadow` — observed live but absent from the expected system of record
-- `Stale` — present in the system of record but no longer observed or confirmed in use
+- `Stale` — present in the system of record but no longer observed
 - `Conflicting` — sources disagree
 - `Unresolved` — insufficient evidence
+- `Drifted` — material change since prior CBOM version
 
 ### Step 8 — Identify Migration Dependencies
 Assign the primary migration dependency:
@@ -261,10 +285,31 @@ Prioritization order (evidence-based):
 5. Vendor-controlled or unsupported dependencies
 6. Migration prerequisites that block multiple downstream systems
 
-### Step 11 — Produce Outputs
+### Step 11 — Produce Outputs and Update the Living Record
 Generate the structured outputs defined in Output Format.
-Report deltas on subsequent runs rather than treating the
-inventory as a one-time assessment.
+When MODE = delta or continuous, emphasize changes since
+the prior version. Persist the new CBOM version with
+updated last-reconciled dates and drift status.
+
+### Continuous Operating Model (Required for Living CBOM)
+A PQC-CBOM is living only when the following are defined
+and owned:
+
+- **Triggers** — certificate rotation, library/firmware upgrade,
+  new application or service deployment, vendor roadmap update,
+  architecture change, scheduled discovery cycle (minimum quarterly)
+- **Owner of the living process** — named team responsible for
+  ingestion, reconciliation, and version publication
+- **Delta reporting** — every cycle produces a clear list of
+  New / Changed / Removed / Drifted records
+- **Integration points** — change management, CI/CD (for
+  application crypto), PKI certificate lifecycle, vulnerability
+  management, and asset inventory processes
+- **Access model** — queryable by owners and leadership
+  (Microsoft Copilot agent or equivalent) with audit logging
+
+If these elements are absent, the CBOM remains a high-quality
+point-in-time baseline, not a living system of record.
 
 ## Output Format
 
@@ -273,56 +318,55 @@ language. No filler, minimal narrative. State findings and
 actions — nothing else.
 
 ### Section 1 — Executive Summary
-Three sentences maximum. State scope assessed, discovery
-sources used, material coverage gaps, highest-risk quantum-
-vulnerable dependencies, and major migration blockers.
+Three sentences maximum. State CBOM version, scope covered,
+material coverage gaps, highest-priority quantum-vulnerable
+dependencies or drift items, and major migration blockers.
 
-### Section 2 — PQC-CBOM Inventory
+### Section 2 — PQC-CBOM Inventory (Current Version)
 Component-level system of record ordered by priority:
 
-| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source | Validation Source | Owner | Migration Dependency | Disposition | Priority | Status |
+| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source | Validation Source | Owner | Migration Dependency | Disposition | Priority | Status | Last Reconciled | Drift |
 
-### Section 3 — Discovery Coverage Matrix
-Reproduce the technology-area coverage ratings actually
-achieved in this assessment, noting any deviations from
-the expected Primary/Strong sources and the resulting gaps.
+### Section 3 — Delta Report (when prior version exists)
+| Record ID | Change Type | Prior State | Current State | Risk Implication | Required Action | Owner |
 
+### Section 4 — Discovery Coverage Matrix
 | Technology Area | Primary Source Used | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
 
-### Section 4 — Reconciliation Findings
+### Section 5 — Reconciliation Findings
 | Record / Asset | Source A | Source B | Result | Risk | Required Action | Owner |
 
-### Section 5 — Migration Dependency Register
+### Section 6 — Migration Dependency Register
 | Technology | Dependency | Constraint | Prerequisite | Owner | Vendor | Target State | Status |
 
-### Section 6 — Owner Action Queue
-Evidence gaps and remediation actions by accountable team.
-Every actionable record requires a named technical owner.
+### Section 7 — Owner Action Queue
+Evidence gaps, drift items, and remediation actions by
+accountable team. Every actionable record requires a named
+technical owner.
 
 ## Quality Benchmark
-A high-quality output identifies quantum-vulnerable
-dependencies the client did not fully map, names specific
-migration blockers with owners, and produces actions
-specific enough to assign to an engineer or team. Crisp
-direct declarative sentences. No marketing language. No
-filler, minimal narrative.
+A high-quality output maintains a versioned inventory,
+explicitly surfaces drift, names specific migration blockers
+with owners, and produces actions specific enough to assign
+to an engineer or team. Crisp direct declarative sentences.
+No marketing language. No filler, minimal narrative.
 
 Poor output:
 "Several quantum-vulnerable algorithms were identified.
 PQC migration planning should begin."
 
 Good output:
-"Network scan identified 47 live TLS services presenting
-RSA-2048 certificates. 19 of those certificates are absent
-from the CA inventory (Shadow). Code-signing HSM partition
-uses RSA-4096 with no vendor PQC roadmap linked to the
-deployed firmware version. OT gateway firmware (v3.2.1)
-relies on ECDSA P-256; vendor attestation states PQC support
-in v4.x only — current hardware reaches end-of-support
-Q2 2028. Recommend immediate CA reconciliation for the 19
-shadow certificates, HSM firmware upgrade assessment owned
-by PKI Engineering, and OT vendor roadmap validation owned
-by OT Security before any capital planning cycle."
+"CBOM v1.4 reconciled 14 Oct 2026. 19 leaf certificates
+observed live remain absent from CA inventory (Shadow) —
+unchanged since v1.3. New drift: OpenSSL 1.1.1 library
+detected in payment API (Record PQC-0847) previously
+recorded as 3.0.x; quantum-vulnerable RSA key exchange
+still present. OT gateway firmware still on ECDSA P-256
+with vendor PQC support only in v4.x (EOS Q2 2028).
+Recommend immediate CA reconciliation for the 19 Shadow
+certificates, library upgrade owned by Payments Engineering,
+and OT vendor roadmap validation owned by OT Security
+before capital planning cycle."
 
 ## Known Limitations
 - Network scan output alone is never a complete PQC-CBOM
@@ -342,14 +386,13 @@ by OT Security before any capital planning cycle."
   incomplete
 - An unknown algorithm, owner, or migration path is itself
   a finding requiring follow-up
-- The PQC-CBOM has a shelf life; revalidate after upgrades,
-  certificate rotation, architecture changes, or vendor
-  roadmap updates
+- Without defined triggers, process owner, and delta reporting,
+  the CBOM reverts to a point-in-time baseline
 - This skill processes client data including potentially
   sensitive inventory information, scan output, and interview
   notes — handle all inputs in accordance with client data
   handling requirements and do not retain beyond the
-  engagement session
+  engagement or authorized continuous process
 
 ## Related Skills
 - ai-bom-inventory.md (structural pattern and inventory
@@ -361,5 +404,6 @@ by OT Security before any capital planning cycle."
 
 | Version | Date | Change |
 |---|---|---|
-| 1.0 | August 2026 | Initial PQC-CBOM inventory skill defining scope, data model, discovery reconciliation, migration dependencies, outputs, and decision rules |
-| 1.1 | August 2026 | Replaced source-centric discovery table with technology-area Discovery Coverage Matrix; aligned structure and voice to nhi-risk-scorer pattern for GitHub rendering and Agent Skills compliance |
+| 1.0 | August 2026 | Initial PQC-CBOM inventory skill |
+| 1.1 | August 2026 | Replaced source-centric table with technology-area Discovery Coverage Matrix; aligned structure to nhi-risk-scorer pattern |
+| 1.2 | August 2026 | Shifted from engagement-bounded to living system of record model (SBOM-style). Added MODE parameter, drift detection, delta reporting, Continuous Operating Model requirements, versioned records, and explicit triggers/ownership for ongoing maintenance |
