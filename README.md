@@ -131,12 +131,10 @@ artifacts for skill files and related agentic workflows.
 | August 2026 | Added pqc-cbom-inventory v1.0 — Post-Quantum Cryptography Cryptographic Bill of Materials (PQC-CBOM) skill for quantum-vulnerable dependency inventory, multi-source reconciliation, and migration dependency mapping |
 
 ## Related Work
-- Human Identity is Governed. Machine Identity is Not. Attackers Already Know.
-  NHI Security — Perspective Paper (Windval, 2026) (https://www.windval.com/advisor-perspectives/non-human-identity-governance)
-- OT/ICS Threat Intelligence Brief Pipeline — automated US-CERT/CISA feed
-  analysis with NERC CIP and MITRE ATT&CK for ICS mapping
-- From Chaos to Clarity: The Path to an Accurate and Continuously
-  Updated Asset Inventory — Perspective Paper (Windval, 2025) (https://www.windval.com/advisor-perspectives/chaos-to-clarity-aw9zt)
+- Design for Breach: Assume the Attacker Is Already Inside - Perspective Paper (Windval, 2026) (https://www.windval.com/advisor-perspectives/design-for-breach)
+- Human Identity is Governed. Machine Identity is Not. Attackers Already Know - NHI Security — Perspective Paper (Windval, 2026) (https://www.windval.com/advisor-perspectives/non-human-identity-governance)
+- OT/ICS Threat Intelligence Brief Pipeline — automated US-CERT/CISA feed analysis with NERC CIP and MITRE ATT&CK for ICS mapping
+- From Chaos to Clarity: The Path to an Accurate and Continuously Updated Asset Inventory — Perspective Paper (Windval, 2025) (https://www.windval.com/advisor-perspectives/chaos-to-clarity-aw9zt)
 
 
 ## License
