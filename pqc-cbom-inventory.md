@@ -1,21 +1,23 @@
+
 ---
 name: pqc-cbom-inventory
-description: Build and maintain a living Post-Quantum Cryptography
-  Cryptographic Bill of Materials (PQC-CBOM) across IT,
-  cloud, applications, identity, network, PKI, OT/ICS, and
-  third-party services. Identifies quantum-vulnerable
-  cryptographic dependencies, discovery evidence, ownership,
-  PQC support status, and migration dependencies. Use when
-  establishing or operating a continuous cryptographic
-  inventory for PQC migration planning, reconciling multi-
-  source discovery evidence, detecting drift, assessing
-  quantum risk to long-lived data, mapping migration blockers,
-  or producing evidence-based readiness posture against NIST
-  PQC standards and CNSA 2.0. Accepts structured inventories
-  (CSV, JSON, XLSX) and unstructured technical documentation,
-  scan output, architecture records, vendor attestations, and
-  interview notes. Treats the CBOM as a versioned, delta-driven
-  system of record — not a point-in-time report.
+description: Enable on-demand compilation of a Post-Quantum
+  Cryptography Cryptographic Bill of Materials (PQC-CBOM)
+  from native discovery source outputs across IT, cloud,
+  applications, identity, network, PKI, OT/ICS, and
+  third-party services. The agent ingests current flat-file
+  or API extracts from network crypto scanners, PKI/CA,
+  AppSec/SCA/SAST, IAM, HSM/KMS, cloud crypto services,
+  OT/ICS inventories, and vendor roadmaps, then applies
+  classification, multi-source reconciliation, quantum-
+  vulnerable analysis, ownership mapping, and prioritization
+  logic at query or refresh time. Use when establishing a
+  low-overhead living cryptographic inventory capability,
+  avoiding a separately maintained structured CBOM that
+  risks becoming stale. Accepts structured and unstructured
+  native tool outputs. Treats native source extracts as the
+  system of record; the agent is the compilation and query
+  engine.
 license: MIT
 compatibility: Designed for Claude Code, OpenAI Codex,
   and any Agent Skills compatible client. No system
@@ -24,7 +26,7 @@ compatibility: Designed for Claude Code, OpenAI Codex,
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.2"
+  version: "1.3"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
@@ -34,73 +36,69 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.2 — August 2026
+1.3 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
 Windval Technology Solutions
 
 ## Purpose
-Create and operate a living, evidence-based Cryptographic
-Bill of Materials focused on Post-Quantum Cryptography
-readiness. The PQC-CBOM is a versioned system of record —
-not a point-in-time assessment report.
+Enable a low-overhead, living PQC-CBOM capability by treating
+native discovery tool outputs as the authoritative sources of
+truth and using an agent as the compilation and query engine.
 
-It inventories where cryptography is used, identifies
-quantum-vulnerable public-key dependencies, records
-ownership and discovery evidence, tracks migration
-dependencies, and detects drift over time.
+The agent ingests current flat-file or API extracts from the
+relevant cryptographic discovery sources, applies the
+Discovery Coverage Matrix, classification rules, multi-source
+reconciliation, quantum-vulnerable analysis, ownership mapping,
+and prioritization logic, and produces on-demand CBOM views,
+delta views, and natural-language answers.
 
-Readiness is a derived outcome of inventory quality and
-maintenance discipline. Workflow order remains fixed:
+No separately maintained structured CBOM inventory is required.
+Freshness is determined solely by the currency of the native
+source extracts. When a source file is refreshed, the next
+agent run reflects it.
 
-> Inventory first. Validate second. Prioritize third. Migrate fourth.
-> Then continuously reconcile and report deltas.
+Workflow order remains:
+
+> Inventory sources first. Validate and reconcile second.
+> Prioritize third. Enable continuous query and delta fourth.
 
 ## Background
-A single discovery platform or one-time assessment cannot
-establish enterprise-wide PQC readiness. Network scanning,
-CA exports, SCA results, HSM inventories, and vendor
-roadmaps each see only part of the surface. Point-in-time
-reports go stale the moment a certificate rotates, a
-library is upgraded, firmware is patched, or a vendor
-updates its PQC roadmap.
+A materialized, structured CBOM that depends on ongoing human
+or process discipline to stay current frequently becomes another
+stale inventory. That is the classic failure mode of point-in-time
+assessments and many SBOM programs.
 
-Living SBOMs solved the same problem for software
-dependencies by shifting from periodic reports to
-continuous, versioned, delta-driven inventories integrated
-into change processes. The PQC-CBOM applies the same model
-to cryptographic dependencies.
+Living capability is achieved more sustainably by:
+- Keeping the native tool outputs (scans, CA exports, SCA results,
+  HSM inventories, cloud crypto exports, OT inventories, vendor
+  roadmaps) current, and
+- Using an agent to compile, reconcile, classify, and query
+  the CBOM view on demand or on scheduled refresh.
 
-The CBOM closes the gap by maintaining, at component level:
-- Technology or service that uses cryptography
-- Cryptographic function performed
-- Algorithms, protocols, certificates, keys, and libraries
-- Quantum-vulnerable classification
-- Discovery and validation source + evidence date
-- Technical and business ownership
-- PQC capability or vendor roadmap status
-- Specific migration dependency
-- Record version and last-reconciled date
-- Drift status relative to prior version
+This model eliminates the second system of record, reduces
+ongoing overhead, and keeps the cryptographic inventory as
+fresh as the underlying discovery sources.
 
 ## Parameters
 
-- **INPUT:** One or more of the following — network cryptographic
-  scan output, certificate inventory or CA export, application
-  dependency inventory, HSM/KMS inventory, cloud cryptographic
-  service export, IAM/federation configuration inventory,
-  OT/ICS asset or architecture inventory, vendor product
-  inventory or roadmap evidence, CMDB or asset inventory,
-  prior CBOM version for delta analysis. Partial input is
-  the normal starting condition — gaps in input are findings.
+- **INPUT:** Current native outputs from one or more of the
+  following — network cryptographic scan output, certificate
+  inventory or CA export, application dependency / SCA / SAST
+  results, HSM/KMS inventory, cloud cryptographic service
+  export, IAM/federation configuration inventory, OT/ICS asset
+  or architecture inventory, vendor product inventory or
+  roadmap evidence, CMDB extracts. Prior source snapshots may
+  be supplied for delta analysis.
 - **ENVIRONMENT:** enterprise / cloud / network / application /
   identity / PKI / OT/ICS / hybrid / all
 - **SCOPE:** Technology domain, business unit, environment,
   application portfolio, or asset group
 - **DISCOVERY_DEPTH:** baseline / validated / reconciled
-- **MODE:** initial | delta | continuous
-- **OUTPUT_FORMAT:** markdown / CSV / JSON / XLSX-ready table
+- **MODE:** initial | delta | continuous / on-demand
+- **OUTPUT_FORMAT:** markdown / CSV / JSON / XLSX-ready table /
+  natural-language agent response
 - **EVIDENCE_STANDARD:** observed / authoritative /
   vendor-attested / owner-validated
 - **PQC_CONTEXT:** NIST / CNSA 2.0 / contractual /
@@ -113,13 +111,8 @@ Define business services, technology domains, environments,
 and asset populations in scope. Identify data classifications
 and confidentiality shelf-life requirements where available.
 Use the Discovery Coverage Matrix to identify expected
-Primary and Strong sources for each technology area.
-Establish record granularity — a single product may generate
-multiple CBOM records when it performs multiple cryptographic
-functions.
-
-Rule: Do not treat a vendor or product name as sufficient
-evidence of cryptographic configuration.
+Primary and Strong sources for each technology area and the
+native output formats the agent will consume.
 
 | Technology / Discovery Area | Tenable | PKI / CA | AppSec / SCA-SAST | IAM | Cloud / HSM-KMS | OT / ICS | Vendor / GRC | Discovery Notes |
 |---|---|---|---|---|---|---|---|---|
@@ -135,181 +128,77 @@ evidence of cryptographic configuration.
 | OT / ICS protocol and device cryptography | Limited | Limited | Limited | None | Limited | Primary | Strong | OT asset, architecture, and engineering sources are primary; vendor documentation is critical for embedded firmware and long-lifecycle devices. |
 | Vendor PQC roadmaps and attestations | None | None | None | Partial | Partial | Partial | Primary | Vendor/GRC is authoritative for collected roadmaps, attestations, support commitments, and contractual evidence. |
 
-### Step 2 — Ingest and Normalize Discovery Evidence
-For each input source:
-- Record source type, collection date, scope, and owner
-- Extract technology, version, protocol, certificate, key,
-  algorithm, and cryptographic-function details
-- Normalize aliases and naming conventions
-- Preserve the original evidence reference
-- Mark unavailable values as `Unknown`; do not infer
-  unsupported technical details
+### Step 2 — Define Native Source Data Contracts
+For each in-scope discovery source, define the exact extract
+format, required fields, refresh cadence, and owner responsible
+for producing the current file or API pull. The agent will
+consume only these contracted native outputs.
 
-When MODE = delta or continuous, also ingest the prior
-CBOM version for comparison.
+Mark unavailable sources as coverage gaps. Do not invent data.
 
-### Step 3 — Create or Update Component-Level PQC-CBOM Records
-Create one record for each material cryptographic
-implementation. When a prior version exists, update
-existing records and flag new, changed, or removed
-dependencies.
+### Step 3 — Agent Ingestion and Normalization
+The agent (or supporting preprocessing) ingests the current
+native extracts, normalizes naming and identifiers, preserves
+evidence references and collection dates, and prepares records
+for reconciliation. Unavailable values remain `Unknown`.
 
-Examples of record subjects:
-- Load balancer TLS listener
-- Root or issuing CA
-- Application-bundled OpenSSL library
-- SAML token-signing certificate
-- HSM key used for code signing
-- IPsec/IKE profile on a VPN gateway
-- OPC UA server certificate and security policy
-- Firmware-signing process for an OT device family
+### Step 4 — Classify Cryptographic Function and Quantum-Vulnerable Status
+For each discovered implementation the agent assigns:
+- Cryptographic function(s)
+- Current algorithm(s) and protocol/interface
+- Quantum-vulnerable classification (Yes / No / Partial / Unknown / Not Applicable)
+- PQC target category where determinable (ML-KEM, ML-DSA, SLH-DSA, hybrid, retain + validate dependencies, or Unknown)
 
-Every record must carry: Record ID, last-reconciled date,
-CBOM version, and drift status (New / Unchanged / Changed /
-Removed / Unresolved).
+### Step 5 — Multi-Source Reconciliation and Drift Detection
+The agent performs reconciliation across sources using the
+Discovery Coverage Matrix guidance:
+- Live leaf certificates ↔ CA-issued records
+- SCA libraries ↔ deployed application versions
+- KMS keys ↔ consuming applications
+- Vendor claims ↔ deployed product/firmware versions
+- OT assets ↔ protocol and certificate observations
 
-### Step 4 — Classify Cryptographic Function
-Assign one or more functions:
-- Key establishment / key exchange
-- Digital signature
-- Authentication
-- Certificate trust
-- Code or firmware signing
-- Encryption at rest
-- Encryption in transit
-- Key wrapping / key protection
-- Hashing / integrity
-- Random-number generation
-- Other / Unknown
+Outcomes: Validated / Shadow / Stale / Conflicting / Unresolved.
 
-### Step 5 — Identify Quantum-Vulnerable Dependencies
-Record the observed algorithm and classify whether the
-public-key dependency is quantum-vulnerable.
+When prior source snapshots are supplied, the agent also
+produces a delta view (New / Changed / Removed / Drifted).
 
-Common migration targets:
-- RSA key establishment or signatures
-- ECDSA signatures
-- ECDH key agreement
-- Finite-field Diffie-Hellman
-- Vendor-specific public-key implementations requiring validation
+### Step 6 — Ownership, Migration Dependency, and Priority
+The agent maps technical and business owners (from CMDB or
+supplied ownership data), records the primary migration
+dependency, applies the evidence-based prioritization order,
+and surfaces disposition recommendations.
 
-Do not automatically classify symmetric encryption or hashing
-as requiring replacement. Inspect any associated public-key
-exchange, wrapping, certificate, signing, or authentication
-dependency.
-
-### Step 6 — Map the PQC Target
-| Current Function | PQC Target Category |
-|---|---|
-| Public-key key establishment | ML-KEM or approved hybrid key-establishment mechanism |
-| Digital signatures | ML-DSA, SLH-DSA, or another approved signature standard |
-| Certificate signing | PQC-capable certificate and PKI implementation |
-| Code / firmware signing | PQC-capable signing workflow and validation chain |
-| Symmetric encryption | Retain appropriate symmetric algorithm; validate key-establishment and key-wrapping dependencies |
-| Hashing / integrity | Retain appropriate hash algorithm; validate signature and certificate dependencies |
-
-Record `Unknown` when the vendor, protocol, or architecture
-has not selected a target.
-
-### Step 7 — Reconcile Discovery Sources and Detect Drift
-Reconciliation is mandatory where multiple sources cover the
-same cryptographic asset. Use the Discovery Coverage Matrix
-to identify which sources should be Primary or Strong.
-
-When a prior CBOM version is supplied, perform delta analysis:
-- New quantum-vulnerable dependencies
-- Algorithm or protocol changes
-- Ownership changes
-- Migration dependency changes
-- Records that disappeared (possible decommission or loss of visibility)
-- Records that became Shadow or Stale
-
-Classify reconciliation outcomes:
-- `Validated` — discovery and authoritative records agree
-- `Shadow` — observed live but absent from the expected system of record
-- `Stale` — present in the system of record but no longer observed
-- `Conflicting` — sources disagree
-- `Unresolved` — insufficient evidence
-- `Drifted` — material change since prior CBOM version
-
-### Step 8 — Identify Migration Dependencies
-Assign the primary migration dependency:
-- Configuration change
-- Protocol uplift
-- Software/library upgrade
-- Application refactor
-- Certificate reissuance
-- PKI hierarchy redesign
-- HSM/KMS upgrade
-- Hardware or firmware replacement
-- Vendor roadmap dependency
-- Third-party contract dependency
-- Compatibility/interoperability testing
-- Decommission
-- Unknown
-
-Record the specific technical or ownership constraint.
-Do not collapse dependencies into a vague maturity score.
-
-### Step 9 — Assess Risk Context
-Document available evidence for:
-- Data sensitivity
-- Confidentiality shelf life
-- External exposure
-- Trust-chain or blast-radius significance
-- System criticality
-- Replacement complexity
-- Vendor or lifecycle constraint
-- Safety and availability constraints for OT/ICS
-
-Where evidence is incomplete, leave the field `Unknown`
-and create a follow-up action.
-
-### Step 10 — Determine Disposition and Priority
-Recommended dispositions:
-- Retain and migrate
-- Upgrade
-- Refactor
-- Replace
-- Isolate
-- Apply compensating control
-- Decommission
-- Investigate
-
-Prioritization order (evidence-based):
+Prioritization order:
 1. Long-lived sensitive data and HNDL exposure
-2. High-blast-radius trust infrastructure (roots, intermediates,
-   identity signing, code signing)
+2. High-blast-radius trust infrastructure
 3. Internet-facing or externally connected services
-4. Systems with long hardware, firmware, or procurement lifecycles
+4. Long hardware/firmware/procurement lifecycle systems
 5. Vendor-controlled or unsupported dependencies
 6. Migration prerequisites that block multiple downstream systems
 
-### Step 11 — Produce Outputs and Update the Living Record
-Generate the structured outputs defined in Output Format.
-When MODE = delta or continuous, emphasize changes since
-the prior version. Persist the new CBOM version with
-updated last-reconciled dates and drift status.
+### Step 7 — Produce On-Demand CBOM Views and Answers
+The agent returns:
+- Current CBOM view (component-level)
+- Delta view (when prior snapshots exist)
+- Discovery coverage and gap summary
+- Migration dependency and owner action views
+- Natural-language answers to operator and leadership queries
 
-### Continuous Operating Model (Required for Living CBOM)
-A PQC-CBOM is living only when the following are defined
-and owned:
+### Continuous Operating Model
+A living capability exists when:
+- Native source extracts have defined owners and refresh cadence
+  (minimum quarterly, event-driven on major changes preferred)
+- The agent (or scheduled job) can re-ingest and recompile on
+  demand or on trigger
+- Process ownership for keeping source extracts current is
+  explicitly assigned
+- Integration points exist with change management, certificate
+  lifecycle, vulnerability management, and asset inventory
+  processes so that source refreshes are reliable
 
-- **Triggers** — certificate rotation, library/firmware upgrade,
-  new application or service deployment, vendor roadmap update,
-  architecture change, scheduled discovery cycle (minimum quarterly)
-- **Owner of the living process** — named team responsible for
-  ingestion, reconciliation, and version publication
-- **Delta reporting** — every cycle produces a clear list of
-  New / Changed / Removed / Drifted records
-- **Integration points** — change management, CI/CD (for
-  application crypto), PKI certificate lifecycle, vulnerability
-  management, and asset inventory processes
-- **Access model** — queryable by owners and leadership
-  (Microsoft Copilot agent or equivalent) with audit logging
-
-If these elements are absent, the CBOM remains a high-quality
-point-in-time baseline, not a living system of record.
+No separate structured CBOM database is maintained. The
+compiled view is ephemeral and recomputed from current sources.
 
 ## Output Format
 
@@ -318,81 +207,66 @@ language. No filler, minimal narrative. State findings and
 actions — nothing else.
 
 ### Section 1 — Executive Summary
-Three sentences maximum. State CBOM version, scope covered,
-material coverage gaps, highest-priority quantum-vulnerable
-dependencies or drift items, and major migration blockers.
+Three sentences maximum. State sources used, material coverage
+gaps, highest-priority quantum-vulnerable dependencies or
+drift items, and major migration blockers.
 
-### Section 2 — PQC-CBOM Inventory (Current Version)
-Component-level system of record ordered by priority:
+### Section 2 — Compiled PQC-CBOM View
+| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Evidence Date |
 
-| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source | Validation Source | Owner | Migration Dependency | Disposition | Priority | Status | Last Reconciled | Drift |
-
-### Section 3 — Delta Report (when prior version exists)
+### Section 3 — Delta View (when prior source snapshots exist)
 | Record ID | Change Type | Prior State | Current State | Risk Implication | Required Action | Owner |
 
-### Section 4 — Discovery Coverage Matrix
+### Section 4 — Discovery Coverage Matrix (Actual)
 | Technology Area | Primary Source Used | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
 
 ### Section 5 — Reconciliation Findings
 | Record / Asset | Source A | Source B | Result | Risk | Required Action | Owner |
 
-### Section 6 — Migration Dependency Register
+### Section 6 — Migration Dependency & Owner Action View
 | Technology | Dependency | Constraint | Prerequisite | Owner | Vendor | Target State | Status |
 
-### Section 7 — Owner Action Queue
-Evidence gaps, drift items, and remediation actions by
-accountable team. Every actionable record requires a named
-technical owner.
-
 ## Quality Benchmark
-A high-quality output maintains a versioned inventory,
-explicitly surfaces drift, names specific migration blockers
-with owners, and produces actions specific enough to assign
-to an engineer or team. Crisp direct declarative sentences.
-No marketing language. No filler, minimal narrative.
+A high-quality output recompiles cleanly from current native
+sources, explicitly surfaces coverage gaps and reconciliation
+outcomes, names specific migration blockers with owners, and
+produces actions specific enough to assign to an engineer or
+team. Crisp direct declarative sentences. No marketing
+language. No filler, minimal narrative.
 
 Poor output:
 "Several quantum-vulnerable algorithms were identified.
 PQC migration planning should begin."
 
 Good output:
-"CBOM v1.4 reconciled 14 Oct 2026. 19 leaf certificates
-observed live remain absent from CA inventory (Shadow) —
-unchanged since v1.3. New drift: OpenSSL 1.1.1 library
-detected in payment API (Record PQC-0847) previously
-recorded as 3.0.x; quantum-vulnerable RSA key exchange
-still present. OT gateway firmware still on ECDSA P-256
-with vendor PQC support only in v4.x (EOS Q2 2028).
-Recommend immediate CA reconciliation for the 19 Shadow
-certificates, library upgrade owned by Payments Engineering,
-and OT vendor roadmap validation owned by OT Security
-before capital planning cycle."
+"Agent run 14 Oct 2026 using current Tenable, CA export, and
+SCA extracts. 19 leaf certificates observed live remain absent
+from CA inventory (Shadow). New since last source snapshot:
+OpenSSL 1.1.1 detected in payment API (previously 3.0.x);
+quantum-vulnerable RSA key exchange still present. OT gateway
+firmware remains on ECDSA P-256 with vendor PQC support only
+in v4.x (EOS Q2 2028). Recommend immediate CA reconciliation
+for the 19 Shadow certificates, library upgrade owned by
+Payments Engineering, and OT vendor roadmap validation owned
+by OT Security before capital planning cycle."
 
 ## Known Limitations
-- Network scan output alone is never a complete PQC-CBOM
-- Vendor roadmap claims are evidence inputs, not proof of
-  deployed capability
-- Symmetric algorithms and hashes are not automatically
-  migration targets; associated public-key dependencies must
-  be inspected
-- OT/ICS discovery is constrained by safety and availability
-  requirements — specialized methods and vendor evidence are
-  required
-- Locally embedded or hardcoded cryptography invisible to
-  network and PKI sources requires application or firmware
-  analysis
-- Confidentiality shelf-life and HNDL exposure assessments
-  require data classification inputs that are frequently
-  incomplete
-- An unknown algorithm, owner, or migration path is itself
-  a finding requiring follow-up
-- Without defined triggers, process owner, and delta reporting,
-  the CBOM reverts to a point-in-time baseline
+- Quality is bounded by the currency and completeness of the
+  native source extracts. Stale or missing source files produce
+  incomplete or outdated compiled views.
+- Complex multi-source matching (especially across inconsistent
+  naming) requires well-defined data contracts and may need
+  human review for edge cases.
+- OT/ICS discovery remains constrained by safety and availability
+  requirements.
+- Confidentiality shelf-life and HNDL prioritization require
+  client-supplied data classification inputs where available.
+- The agent does not replace the need for named process owners
+  who keep the underlying source extracts current.
 - This skill processes client data including potentially
-  sensitive inventory information, scan output, and interview
-  notes — handle all inputs in accordance with client data
-  handling requirements and do not retain beyond the
-  engagement or authorized continuous process
+  sensitive inventory information and scan output — handle all
+  inputs in accordance with client data handling requirements
+  and do not retain beyond the authorized process.
 
 ## Related Skills
 - ai-bom-inventory.md (structural pattern and inventory
@@ -405,5 +279,6 @@ before capital planning cycle."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | August 2026 | Initial PQC-CBOM inventory skill |
-| 1.1 | August 2026 | Replaced source-centric table with technology-area Discovery Coverage Matrix; aligned structure to nhi-risk-scorer pattern |
-| 1.2 | August 2026 | Shifted from engagement-bounded to living system of record model (SBOM-style). Added MODE parameter, drift detection, delta reporting, Continuous Operating Model requirements, versioned records, and explicit triggers/ownership for ongoing maintenance |
+| 1.1 | August 2026 | Technology-area Discovery Coverage Matrix; aligned structure to nhi-risk-scorer pattern |
+| 1.2 | August 2026 | Shifted toward living system of record with versioned CBOM, drift detection, and continuous operating model |
+| 1.3 | August 2026 | Architectural pivot: native tool outputs become the system of record; agent acts as on-demand compilation and query engine. Eliminates separately maintained structured CBOM to reduce staleness risk and ongoing overhead |
