@@ -1,3 +1,4 @@
+```markdown
 ---
 name: pqc-cbom-inventory
 description: Build and maintain a Post-Quantum Cryptography
@@ -11,28 +12,24 @@ description: Build and maintain a Post-Quantum Cryptography
   application sources, assessing quantum risk to long-lived
   data, mapping migration blockers, or producing evidence-
   based readiness posture against NIST PQC standards and
-  CNSA 2.0. Handles structured inventories (CSV, JSON, XLSX)
+  CNSA 2.0. Accepts structured inventories (CSV, JSON, XLSX)
   and unstructured technical documentation, scan output,
-  architecture records, vendor attestations, and interview
-  notes.
+  architecture records, vendor attestations, and interview notes.
 license: MIT
-compatibility: Designed for Claude Code, OpenAI Codex, and
-  any Agent Skills compatible client. No system packages
-  required. No network access required. Operates on provided
-  inventory inputs and signal data only.
+compatibility: Designed for Claude Code, OpenAI Codex,
+  and any Agent Skills compatible client. No system
+  packages required. No network access required.
+  Operates on provided inventory inputs and signal data only.
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
   version: "1.1"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
-  skill-type: full-assessment
   validated: "false"
   validation-score: pending
   compliance: NIST PQC, CNSA 2.0, NIST SP 800-208, NIST IR 8413
-  discovery-tiers: "1,2,3"
 ---
-
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
