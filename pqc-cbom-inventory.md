@@ -1,4 +1,3 @@
-
 ---
 name: pqc-cbom-inventory
 description: Enable on-demand compilation of a Post-Quantum
