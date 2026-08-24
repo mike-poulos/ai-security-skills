@@ -23,7 +23,7 @@ compatibility: Designed for Claude Code, OpenAI Codex, and
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.0"
+  version: "1.1"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   skill-type: full-assessment
@@ -36,7 +36,7 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.0 — August 2026
+1.1 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -107,24 +107,31 @@ The PQC-CBOM closes the gap by recording, at component level:
 
 ## Input Source Guidance
 
-### Primary Discovery Sources
+### Discovery Coverage Matrix
 
-| Source | Best Used For | Primary Limitation |
-|---|---|---|
-| Network Crypto Discovery (Tenable, etc.) | Live network-facing TLS services, negotiated cryptographic posture, leaf certificates presented by scanned services | Does not establish complete PKI, embedded application crypto, HSM/KMS configuration, OT device crypto, or vendor readiness |
-| PKI / CA Source | Root/intermediate hierarchy, issued certificates, templates, issuance policy, enrollment, renewal, revocation | Does not prove where every certificate is actively presented |
-| AppSec / SCA / SAST | Embedded libraries, statically linked components, crypto APIs, hardcoded algorithm use | Limited visibility into appliances, managed services, PKI, and vendor-controlled implementations |
-| IAM / Federation | Federation signing, token signing, certificate authentication, identity trust, authentication configuration | Primarily limited to identity platforms and connected trust relationships |
-| Cloud / HSM / KMS | Managed keys, certificates, HSM/KMS configuration, key operations, cloud-native cryptographic services | Limited to assets managed within the specific platform |
-| OT / ICS Inventory | Industrial protocols, embedded devices, gateways, firmware, operational architecture, site context | Requires specialized inventories, safe collection methods, and vendor evidence |
-| Vendor / GRC | Product roadmaps, attestations, support commitments, contracts, third-party dependencies | Claims must be validated against deployed versions and technical configuration |
-| CMDB / Asset Management | Product footprint, service mapping, lifecycle, ownership, business context | Usually lacks implementation-level algorithm, certificate, key, and library detail |
+Use this matrix to scope discovery sources against each
+technology area. Ratings drive prioritization of collection
+effort and identification of coverage gaps.
+
+| Technology / Discovery Area | Tenable | PKI / CA | AppSec / SCA-SAST | IAM | Cloud / HSM-KMS | OT / ICS | Vendor / GRC | Discovery Notes |
+|---|---|---|---|---|---|---|---|---|
+| Network-facing TLS services | Primary | Partial | Limited | Limited | Partial | Partial | Limited | Tenable is the strongest scalable source for live, network-visible TLS services within authorized scan scope. |
+| Leaf certificates presented on live services | Strong | Primary | Limited | Partial | Partial | Partial | Limited | Use Tenable to observe what is live; use PKI/CA records to validate what is issued and governed. |
+| Root / intermediate CA posture | None | Primary | None | Partial | Partial | Limited | Limited | CA hierarchy, signing algorithms, trust chains, and issuance posture require authoritative PKI/CA data. |
+| Certificate lifecycle policies and templates | None | Primary | None | Partial | Partial | Limited | Partial | Review certificate templates, issuance rules, enrollment, renewal, rotation, and revocation processes. |
+| Embedded cryptographic libraries | Limited | None | Primary | None | Limited | Partial | Partial | SCA/SAST and code/dependency analysis provide the best visibility into embedded or statically linked libraries. |
+| Hardcoded application cryptography | None | None | Primary | None | None | Limited | Partial | Requires application code review, SAST, architecture analysis, and application-owner validation. |
+| Identity / federation signing and authentication crypto | Limited | Partial | Partial | Primary | Partial | None | Strong | IAM is authoritative for federation, token signing, certificate authentication, and identity trust configuration; vendor evidence supplements it. |
+| HSM / KMS key inventory and algorithm configuration | None | Partial | Limited | Limited | Primary | Partial | Strong | Native HSM/KMS inventory is authoritative; vendor documentation helps validate supported algorithms and roadmap. |
+| Cloud-managed certificates and service cryptography | Partial | Partial | Limited | Partial | Primary | None | Strong | Cloud-native inventory is strongest for managed keys, certificates, and service configuration; vendor evidence validates roadmap and service support. |
+| OT / ICS protocol and device cryptography | Limited | Limited | Limited | None | Limited | Primary | Strong | OT asset, architecture, and engineering sources are primary; vendor documentation is critical for embedded firmware and long-lifecycle devices. |
+| Vendor PQC roadmaps and attestations | None | None | None | Partial | Partial | Partial | Primary | Vendor/GRC is authoritative for collected roadmaps, attestations, support commitments, and contractual evidence. |
 
 ### Discovery Source Effectiveness Scale
 
 | Rating | Meaning |
 |---|---|
-| Primary | Authoritative or best available discovery source |
+| Primary | Authoritative or best available discovery source for the technology area |
 | Strong | Substantial direct visibility; corroboration still required |
 | Partial | Useful but incomplete evidence |
 | Limited | Incidental, narrow, or scope-dependent visibility |
@@ -137,9 +144,9 @@ Define business services, technology domains, environments,
 and asset populations in scope. Identify data classifications
 and confidentiality shelf-life requirements where available.
 Identify the expected authoritative source for each discovery
-area. Establish record granularity — a single product may
-generate multiple CBOM records when it performs multiple
-cryptographic functions.
+area using the Discovery Coverage Matrix. Establish record
+granularity — a single product may generate multiple CBOM
+records when it performs multiple cryptographic functions.
 
 Rule: Do not treat a vendor or product name as sufficient
 evidence of cryptographic configuration.
@@ -211,7 +218,9 @@ has not selected a target.
 
 ### Step 7 — Reconcile Discovery Sources
 Reconciliation is mandatory where multiple sources cover the
-same cryptographic asset.
+same cryptographic asset. Use the Discovery Coverage Matrix
+to identify which sources should be Primary or Strong for
+each technology area.
 
 Examples:
 - Match live leaf certificates to CA-issued records using
@@ -306,7 +315,11 @@ Component-level system of record ordered by priority:
 | Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source | Validation Source | Owner | Migration Dependency | Disposition | Priority | Status |
 
 ### Section 3 — Discovery Coverage Matrix
-| Technology Area | Primary Source | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
+Reproduce the technology-area coverage ratings actually
+achieved in this assessment, noting any deviations from
+the expected Primary/Strong sources and the resulting gaps.
+
+| Technology Area | Primary Source Used | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
 
 ### Section 4 — Reconciliation Findings
 | Record / Asset | Source A | Source B | Result | Risk | Required Action | Owner |
@@ -381,3 +394,4 @@ by OT Security before any capital planning cycle."
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | August 2026 | Initial PQC-CBOM inventory skill defining scope, data model, discovery reconciliation, migration dependencies, outputs, and decision rules |
+| 1.1 | August 2026 | Replaced source-centric Primary Discovery Sources table with technology-area Discovery Coverage Matrix; updated Process Step 1 and Step 7 and Output Section 3 to reference the matrix for scoping and gap analysis |
