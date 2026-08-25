@@ -2,19 +2,19 @@
 name: pqc-cbom-inventory
 description: Enable on-demand compilation of a Post-Quantum
   Cryptography Cryptographic Bill of Materials (PQC-CBOM)
-  from native discovery source outputs across IT, cloud,
+  from source technology extracts across IT, cloud,
   applications, identity, network, PKI, OT/ICS, and
-  third-party services. The agent ingests current flat-file
-  or API extracts from network crypto scanners, PKI/CA,
-  AppSec/SCA/SAST, IAM, HSM/KMS, cloud crypto services,
-  OT/ICS inventories, and vendor roadmaps, then applies
-  classification, multi-source reconciliation, quantum-
-  vulnerable analysis, ownership mapping, and prioritization
-  logic at query or refresh time. Use when establishing a
-  low-overhead living cryptographic inventory capability,
-  avoiding a separately maintained structured CBOM that
-  risks becoming stale. Accepts structured and unstructured
-  native tool outputs. Treats native source extracts as the
+  third-party services. The Microsoft 365 Copilot agent
+  ingests current flat-file or connected extracts from
+  network crypto scanners, PKI/CA, AppSec/SCA/SAST, IAM,
+  HSM/KMS, cloud crypto services, OT/ICS inventories, and
+  vendor roadmaps, then applies classification, multi-source
+  reconciliation, quantum-vulnerable analysis, ownership
+  mapping, and prioritization logic at query or refresh time.
+  Use when establishing a low-overhead living cryptographic
+  inventory capability that avoids a separately maintained
+  structured CBOM. Accepts structured and unstructured
+  source technology extracts. Treats source extracts as the
   system of record; the agent is the compilation and query
   engine.
 license: MIT
@@ -25,7 +25,7 @@ compatibility: Designed for Claude Code, OpenAI Codex,
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.3"
+  version: "1.4"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
@@ -35,7 +35,7 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.3 — August 2026
+1.4 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -43,24 +43,26 @@ Windval Technology Solutions
 
 ## Purpose
 Enable a low-overhead, living PQC-CBOM capability by treating
-native discovery tool outputs as the authoritative sources of
-truth and using an agent as the compilation and query engine.
+source technology extracts as the authoritative sources of
+truth and using a Microsoft 365 Copilot agent as the
+compilation and query engine.
 
-The agent ingests current flat-file or API extracts from the
-relevant cryptographic discovery sources, applies the
-Discovery Coverage Matrix, classification rules, multi-source
-reconciliation, quantum-vulnerable analysis, ownership mapping,
-and prioritization logic, and produces on-demand CBOM views,
-delta views, and natural-language answers.
+The agent ingests current flat-file or connected extracts
+from the relevant cryptographic discovery sources, applies
+the Discovery Coverage Matrix, asset-class classification,
+multi-source reconciliation, quantum-vulnerable analysis,
+ownership mapping, and prioritization logic, and produces
+on-demand CBOM views, delta views, and natural-language
+answers.
 
 No separately maintained structured CBOM inventory is required.
-Freshness is determined solely by the currency of the native
-source extracts. When a source file is refreshed, the next
+Freshness is determined solely by the currency of the source
+technology extracts. When a source file is refreshed, the next
 agent run reflects it.
 
 Workflow order remains:
 
-> Inventory sources first. Validate and reconcile second.
+> Source extracts first. Validate and reconcile second.
 > Prioritize third. Enable continuous query and delta fourth.
 
 ## Background
@@ -70,11 +72,12 @@ stale inventory. That is the classic failure mode of point-in-time
 assessments and many SBOM programs.
 
 Living capability is achieved more sustainably by:
-- Keeping the native tool outputs (scans, CA exports, SCA results,
-  HSM inventories, cloud crypto exports, OT inventories, vendor
-  roadmaps) current, and
-- Using an agent to compile, reconcile, classify, and query
-  the CBOM view on demand or on scheduled refresh.
+- Keeping the source technology extracts (scans, CA exports,
+  SCA results, HSM inventories, cloud crypto exports, OT
+  inventories, vendor roadmaps) current, and
+- Using a Microsoft 365 Copilot agent to compile, reconcile,
+  classify, and query the CBOM view on demand or on scheduled
+  refresh.
 
 This model eliminates the second system of record, reduces
 ongoing overhead, and keeps the cryptographic inventory as
@@ -82,14 +85,14 @@ fresh as the underlying discovery sources.
 
 ## Parameters
 
-- **INPUT:** Current native outputs from one or more of the
-  following — network cryptographic scan output, certificate
-  inventory or CA export, application dependency / SCA / SAST
-  results, HSM/KMS inventory, cloud cryptographic service
-  export, IAM/federation configuration inventory, OT/ICS asset
-  or architecture inventory, vendor product inventory or
-  roadmap evidence, CMDB extracts. Prior source snapshots may
-  be supplied for delta analysis.
+- **INPUT:** Current source technology extracts from one or
+  more of the following — network cryptographic scan output,
+  certificate inventory or CA export, application dependency /
+  SCA / SAST results, HSM/KMS inventory, cloud cryptographic
+  service export, IAM/federation configuration inventory,
+  OT/ICS asset or architecture inventory, vendor product
+  inventory or roadmap evidence, CMDB extracts. Prior source
+  snapshots may be supplied for delta analysis.
 - **ENVIRONMENT:** enterprise / cloud / network / application /
   identity / PKI / OT/ICS / hybrid / all
 - **SCOPE:** Technology domain, business unit, environment,
@@ -111,7 +114,7 @@ and asset populations in scope. Identify data classifications
 and confidentiality shelf-life requirements where available.
 Use the Discovery Coverage Matrix to identify expected
 Primary and Strong sources for each technology area and the
-native output formats the agent will consume.
+extract formats the agent will consume.
 
 | Technology / Discovery Area | Tenable | PKI / CA | AppSec / SCA-SAST | IAM | Cloud / HSM-KMS | OT / ICS | Vendor / GRC | Discovery Notes |
 |---|---|---|---|---|---|---|---|---|
@@ -122,33 +125,56 @@ native output formats the agent will consume.
 | Embedded cryptographic libraries | Limited | None | Primary | None | Limited | Partial | Partial | SCA/SAST and code/dependency analysis provide the best visibility into embedded or statically linked libraries. |
 | Hardcoded application cryptography | None | None | Primary | None | None | Limited | Partial | Requires application code review, SAST, architecture analysis, and application-owner validation. |
 | Identity / federation signing and authentication crypto | Limited | Partial | Partial | Primary | Partial | None | Strong | IAM is authoritative for federation, token signing, certificate authentication, and identity trust configuration; vendor evidence supplements it. |
-| HSM / KMS key inventory and algorithm configuration | None | Partial | Limited | Limited | Primary | Partial | Strong | Native HSM/KMS inventory is authoritative; vendor documentation helps validate supported algorithms and roadmap. |
+| HSM / KMS key inventory and algorithm configuration | None | Partial | Limited | Limited | Primary | Partial | Strong | HSM/KMS inventory is authoritative; vendor documentation helps validate supported algorithms and roadmap. |
 | Cloud-managed certificates and service cryptography | Partial | Partial | Limited | Partial | Primary | None | Strong | Cloud-native inventory is strongest for managed keys, certificates, and service configuration; vendor evidence validates roadmap and service support. |
 | OT / ICS protocol and device cryptography | Limited | Limited | Limited | None | Limited | Primary | Strong | OT asset, architecture, and engineering sources are primary; vendor documentation is critical for embedded firmware and long-lifecycle devices. |
 | Vendor PQC roadmaps and attestations | None | None | None | Partial | Partial | Partial | Primary | Vendor/GRC is authoritative for collected roadmaps, attestations, support commitments, and contractual evidence. |
 
-### Step 2 — Define Native Source Data Contracts
+### Step 2 — Define Source Technology Extract Requirements
 For each in-scope discovery source, define the exact extract
 format, required fields, refresh cadence, and owner responsible
-for producing the current file or API pull. The agent will
-consume only these contracted native outputs.
+for producing the current file. The agent will consume only
+these defined source technology extracts.
 
 Mark unavailable sources as coverage gaps. Do not invent data.
 
-### Step 3 — Agent Ingestion and Normalization
-The agent (or supporting preprocessing) ingests the current
-native extracts, normalizes naming and identifiers, preserves
-evidence references and collection dates, and prepares records
-for reconciliation. Unavailable values remain `Unknown`.
+### Step 3 — PQC-CBOM Asset Classes
+Classify every discovered item into one of the following
+asset classes so the agent applies consistent logic:
 
-### Step 4 — Classify Cryptographic Function and Quantum-Vulnerable Status
+| Asset Class | Example Assets |
+|---|---|
+| Certificate | TLS Certificate, SAML Signing Certificate, Code-Signing Certificate, OPC-UA Certificate, Smart Card Authentication Certificate |
+| Key | RSA Key Pair, ECDSA Key Pair, AWS KMS Customer Managed Key (CMK), Azure Key Vault Key, HSM Code-Signing Key, Key-Wrapping Key |
+| Cryptographic Library | OpenSSL, Bouncy Castle, wolfSSL, Botan, Libgcrypt, Java Cryptography Extension (JCE) |
+| Cryptographic Algorithm | RSA, ECDSA, ECDH, Diffie-Hellman, AES-256, SHA-256, ML-KEM, ML-DSA |
+| Certificate Authority | Enterprise Root CA, Enterprise Issuing CA, Intermediate CA, Public CA, Code-Signing CA |
+| Trust Relationship | TLS Trust Chain, SAML Federation Trust, PKI Trust Anchor, Cross-Certification Trust, Certificate Chain of Trust |
+| Cryptographic Protocol | TLS 1.2, TLS 1.3, IPsec, SSH, SAML, OIDC, OPC-UA Secure Channel |
+| Cryptographic Service | AWS KMS, Azure Key Vault, Google Cloud KMS, Microsoft ADCS, Thales HSM, Entra ID Federation Service |
+| Policy / Template | Web Server Certificate Template, Client Authentication Template, Code-Signing Policy, Key Rotation Policy, Certificate Renewal Policy |
+| Vendor Attestation | PQC Support Roadmap, ML-KEM Support Statement, ML-DSA Support Statement, FIPS 140-3 Validation Evidence, Product Cryptographic Support Matrix |
+
+### Step 4 — Agent Ingestion and Normalization
+The Microsoft 365 Copilot agent (or supporting preprocessing)
+ingests the current source technology extracts, normalizes
+naming and identifiers, preserves evidence references and
+collection dates, and prepares records for reconciliation.
+Unavailable values remain `Unknown`.
+
+The agent works with files uploaded in-session or made
+available through approved enterprise integrations. It does
+not maintain a persistent inventory database across sessions.
+
+### Step 5 — Classify Cryptographic Function and Quantum-Vulnerable Status
 For each discovered implementation the agent assigns:
+- Asset class
 - Cryptographic function(s)
 - Current algorithm(s) and protocol/interface
 - Quantum-vulnerable classification (Yes / No / Partial / Unknown / Not Applicable)
 - PQC target category where determinable (ML-KEM, ML-DSA, SLH-DSA, hybrid, retain + validate dependencies, or Unknown)
 
-### Step 5 — Multi-Source Reconciliation and Drift Detection
+### Step 6 — Multi-Source Reconciliation and Drift Detection
 The agent performs reconciliation across sources using the
 Discovery Coverage Matrix guidance:
 - Live leaf certificates ↔ CA-issued records
@@ -162,7 +188,7 @@ Outcomes: Validated / Shadow / Stale / Conflicting / Unresolved.
 When prior source snapshots are supplied, the agent also
 produces a delta view (New / Changed / Removed / Drifted).
 
-### Step 6 — Ownership, Migration Dependency, and Priority
+### Step 7 — Ownership, Migration Dependency, and Priority
 The agent maps technical and business owners (from CMDB or
 supplied ownership data), records the primary migration
 dependency, applies the evidence-based prioritization order,
@@ -176,7 +202,7 @@ Prioritization order:
 5. Vendor-controlled or unsupported dependencies
 6. Migration prerequisites that block multiple downstream systems
 
-### Step 7 — Produce On-Demand CBOM Views and Answers
+### Step 8 — Produce On-Demand CBOM Views and Answers
 The agent returns:
 - Current CBOM view (component-level)
 - Delta view (when prior snapshots exist)
@@ -186,10 +212,11 @@ The agent returns:
 
 ### Continuous Operating Model
 A living capability exists when:
-- Native source extracts have defined owners and refresh cadence
-  (minimum quarterly, event-driven on major changes preferred)
-- The agent (or scheduled job) can re-ingest and recompile on
-  demand or on trigger
+- Source technology extracts have defined owners and refresh
+  cadence (minimum quarterly, event-driven on major changes
+  preferred)
+- The agent can re-ingest and recompile on demand when current
+  (and prior) extracts are provided
 - Process ownership for keeping source extracts current is
   explicitly assigned
 - Integration points exist with change management, certificate
@@ -197,7 +224,8 @@ A living capability exists when:
   processes so that source refreshes are reliable
 
 No separate structured CBOM database is maintained. The
-compiled view is ephemeral and recomputed from current sources.
+compiled view is ephemeral and recomputed from current
+source technology extracts.
 
 ## Output Format
 
@@ -211,7 +239,7 @@ gaps, highest-priority quantum-vulnerable dependencies or
 drift items, and major migration blockers.
 
 ### Section 2 — Compiled PQC-CBOM View
-| Record ID | System | Technology | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Evidence Date |
+| Record ID | System | Technology | Asset Class | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Evidence Date |
 
 ### Section 3 — Delta View (when prior source snapshots exist)
 | Record ID | Change Type | Prior State | Current State | Risk Implication | Required Action | Owner |
@@ -226,12 +254,12 @@ drift items, and major migration blockers.
 | Technology | Dependency | Constraint | Prerequisite | Owner | Vendor | Target State | Status |
 
 ## Quality Benchmark
-A high-quality output recompiles cleanly from current native
-sources, explicitly surfaces coverage gaps and reconciliation
-outcomes, names specific migration blockers with owners, and
-produces actions specific enough to assign to an engineer or
-team. Crisp direct declarative sentences. No marketing
-language. No filler, minimal narrative.
+A high-quality output recompiles cleanly from current source
+technology extracts, explicitly surfaces coverage gaps and
+reconciliation outcomes, names specific migration blockers
+with owners, and produces actions specific enough to assign
+to an engineer or team. Crisp direct declarative sentences.
+No marketing language. No filler, minimal narrative.
 
 Poor output:
 "Several quantum-vulnerable algorithms were identified.
@@ -251,17 +279,21 @@ by OT Security before capital planning cycle."
 
 ## Known Limitations
 - Quality is bounded by the currency and completeness of the
-  native source extracts. Stale or missing source files produce
-  incomplete or outdated compiled views.
+  source technology extracts. Stale or missing source files
+  produce incomplete or outdated compiled views.
+- The Microsoft 365 Copilot agent works with files provided
+  in-session or through approved enterprise integrations; it
+  does not maintain a persistent inventory database across
+  sessions.
 - Complex multi-source matching (especially across inconsistent
-  naming) requires well-defined data contracts and may need
+  naming) requires well-defined extract formats and may need
   human review for edge cases.
 - OT/ICS discovery remains constrained by safety and availability
   requirements.
 - Confidentiality shelf-life and HNDL prioritization require
   client-supplied data classification inputs where available.
 - The agent does not replace the need for named process owners
-  who keep the underlying source extracts current.
+  who keep the underlying source technology extracts current.
 - This skill processes client data including potentially
   sensitive inventory information and scan output — handle all
   inputs in accordance with client data handling requirements
@@ -280,4 +312,5 @@ by OT Security before capital planning cycle."
 | 1.0 | August 2026 | Initial PQC-CBOM inventory skill |
 | 1.1 | August 2026 | Technology-area Discovery Coverage Matrix; aligned structure to nhi-risk-scorer pattern |
 | 1.2 | August 2026 | Shifted toward living system of record with versioned CBOM, drift detection, and continuous operating model |
-| 1.3 | August 2026 | Architectural pivot: native tool outputs become the system of record; agent acts as on-demand compilation and query engine. Eliminates separately maintained structured CBOM to reduce staleness risk and ongoing overhead |
+| 1.3 | August 2026 | Architectural pivot: source technology extracts become the system of record; Microsoft 365 Copilot agent acts as on-demand compilation and query engine. Eliminates separately maintained structured CBOM to reduce staleness risk and ongoing overhead |
+| 1.4 | August 2026 | Added explicit PQC-CBOM Asset Classes taxonomy; finalized Microsoft 365 Copilot agent capabilities and limitations language; aligned terminology to “source technology extracts” |
