@@ -128,7 +128,7 @@ artifacts for skill files and related agentic workflows.
 | May 2026 | Added planned skill files — agent-data-access-assessment, agent-architecture-governance, agent-human-override-design |
 | May 2026 | Added references/ directory — ICS threat intel system prompt and n8n pipeline JSON extracted and preserved from production deployment |
 | May 2026 | Added NHI Security Perspective Paper reference |
-| August 2026 | Added pqc-cbom-inventory v1.0 — Post-Quantum Cryptography Cryptographic Bill of Materials (PQC-CBOM) skill for quantum-vulnerable dependency inventory, multi-source reconciliation, and migration dependency mapping |
+| August 2026 | Added pqc-cbom-inventory — Post-Quantum Cryptography Cryptographic Bill of Materials (PQC-CBOM) skill for quantum-vulnerable dependency inventory, multi-source reconciliation, and migration dependency mapping |
 
 ## Related Work
 - Design for Breach: Assume the Attacker Is Already Inside - Perspective Paper (Windval, 2026) (https://www.windval.com/advisor-perspectives/design-for-breach)
