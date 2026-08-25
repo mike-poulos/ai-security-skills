@@ -1,41 +1,48 @@
 ---
 name: pqc-cbom-inventory
-description: Enable on-demand compilation of a Post-Quantum
-  Cryptography Cryptographic Bill of Materials (PQC-CBOM)
-  from source technology extracts across IT, cloud,
-  applications, identity, network, PKI, OT/ICS, and
-  third-party services. The Microsoft 365 Copilot agent
-  ingests current flat-file or connected extracts from
-  network crypto scanners, PKI/CA, AppSec/SCA/SAST, IAM,
-  HSM/KMS, cloud crypto services, OT/ICS inventories, and
+description: >-
+  Enable on-demand compilation of a Post-Quantum Cryptography
+  Cryptographic Bill of Materials (PQC-CBOM) from source
+  technology extracts across IT, cloud, applications, identity,
+  network, PKI, OT/ICS, and third-party services. The Microsoft
+  365 Copilot agent ingests current flat-file or connected
+  extracts from network crypto scanners, PKI/CA, AppSec/SCA/SAST,
+  IAM, HSM/KMS, cloud crypto services, OT/ICS inventories, and
   vendor roadmaps, then applies classification, multi-source
-  reconciliation, quantum-vulnerable analysis, ownership
-  mapping, and prioritization logic at query or refresh time.
-  Use when establishing a low-overhead living cryptographic
-  inventory capability that avoids a separately maintained
-  structured CBOM. Accepts structured and unstructured
-  source technology extracts. Treats source extracts as the
-  system of record; the agent is the compilation and query
-  engine.
+  reconciliation, quantum-vulnerable analysis, ownership mapping,
+  and prioritization logic at query time. Use when establishing
+  a low-overhead living cryptographic inventory capability that
+  avoids a separately maintained structured CBOM. Accepts
+  structured and unstructured source technology extracts.
+  Treats source extracts as the system of record; the agent is
+  the compilation and query engine.
 license: MIT
-compatibility: Designed for Claude Code, OpenAI Codex,
-  and any Agent Skills compatible client. No system
-  packages required. No network access required.
-  Operates on provided inventory inputs and signal data only.
+compatibility: >-
+  Designed for Microsoft 365 Copilot and adaptable to other
+  Agent Skills compatible clients. Microsoft 365 enterprise
+  integrations are optional; other clients must be provided
+  equivalent source technology extracts. Can operate entirely
+  on provided files. Connected-source operation requires
+  authorized enterprise integrations. No local system packages
+  are required.
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.4"
+  version: "1.5"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
   validation-score: pending
-  compliance: NIST PQC, CNSA 2.0, NIST SP 800-208, NIST IR 8413
+  standards-alignment: >-
+    FIPS 203, FIPS 204, FIPS 205, NIST PQC Migration Project,
+    CNSA 2.0 where applicable
+  supporting-references: >-
+    NIST SP 800-208, NIST IR 8413
 ---
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.4 — August 2026
+1.5 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -57,8 +64,13 @@ answers.
 
 No separately maintained structured CBOM inventory is required.
 Freshness is determined solely by the currency of the source
-technology extracts. When a source file is refreshed, the next
-agent run reflects it.
+technology extracts. When current source extracts are made
+available, the next agent run reflects them.
+
+The compiled PQC-CBOM view is a derived product. Source
+extracts and their evidence references remain authoritative.
+Material findings must retain traceability to the originating
+record.
 
 Workflow order remains:
 
@@ -76,8 +88,8 @@ Living capability is achieved more sustainably by:
   SCA results, HSM inventories, cloud crypto exports, OT
   inventories, vendor roadmaps) current, and
 - Using a Microsoft 365 Copilot agent to compile, reconcile,
-  classify, and query the CBOM view on demand or on scheduled
-  refresh.
+  classify, and query the CBOM view on demand when current
+  source extracts are made available.
 
 This model eliminates the second system of record, reduces
 ongoing overhead, and keeps the cryptographic inventory as
@@ -136,6 +148,10 @@ format, required fields, refresh cadence, and owner responsible
 for producing the current file. The agent will consume only
 these defined source technology extracts.
 
+Refresh cadence should be appropriate to the source’s rate of
+change, risk, and operational process. Event-driven refresh is
+preferred for material changes.
+
 Mark unavailable sources as coverage gaps. Do not invent data.
 
 ### Step 3 — PQC-CBOM Asset Classes
@@ -166,6 +182,11 @@ The agent works with files uploaded in-session or made
 available through approved enterprise integrations. It does
 not maintain a persistent inventory database across sessions.
 
+Generate Record ID from stable source identifiers such as
+system ID, asset ID, certificate thumbprint, key ID,
+application/component/version, or another documented composite
+key. Do not use row position or ingestion order.
+
 ### Step 5 — Classify Cryptographic Function and Quantum-Vulnerable Status
 For each discovered implementation the agent assigns:
 - Asset class
@@ -176,7 +197,16 @@ For each discovered implementation the agent assigns:
 
 ### Step 6 — Multi-Source Reconciliation and Drift Detection
 The agent performs reconciliation across sources using the
-Discovery Coverage Matrix guidance:
+Discovery Coverage Matrix guidance and the following
+precedence rule:
+
+Use live observation to establish active deployment,
+authoritative platform sources to establish governed
+configuration, and vendor evidence to establish product
+capability. Do not allow one source type to overwrite another
+when they answer different questions.
+
+Examples:
 - Live leaf certificates ↔ CA-issued records
 - SCA libraries ↔ deployed application versions
 - KMS keys ↔ consuming applications
@@ -186,13 +216,20 @@ Discovery Coverage Matrix guidance:
 Outcomes: Validated / Shadow / Stale / Conflicting / Unresolved.
 
 When prior source snapshots are supplied, the agent also
-produces a delta view (New / Changed / Removed / Drifted).
+produces a delta view (New / Changed / Removed / Drifted /
+No Longer Observed). Classify an absent prior record as
+No Longer Observed until an authoritative source confirms
+removal or decommissioning.
 
 ### Step 7 — Ownership, Migration Dependency, and Priority
 The agent maps technical and business owners (from CMDB or
 supplied ownership data), records the primary migration
 dependency, applies the evidence-based prioritization order,
 and surfaces disposition recommendations.
+
+Every actionable record requires a named technical owner.
+If no owner is available from an authoritative source, record
+Ownership Gap and create an assignment action.
 
 Prioritization order:
 1. Long-lived sensitive data and HNDL exposure
@@ -204,6 +241,7 @@ Prioritization order:
 
 ### Step 8 — Produce On-Demand CBOM Views and Answers
 The agent returns:
+- Source Extract Manifest
 - Current CBOM view (component-level)
 - Delta view (when prior snapshots exist)
 - Discovery coverage and gap summary
@@ -213,8 +251,9 @@ The agent returns:
 ### Continuous Operating Model
 A living capability exists when:
 - Source technology extracts have defined owners and refresh
-  cadence (minimum quarterly, event-driven on major changes
-  preferred)
+  cadence appropriate to the source’s rate of change, risk,
+  and operational process (event-driven refresh preferred for
+  material changes)
 - The agent can re-ingest and recompile on demand when current
   (and prior) extracts are provided
 - Process ownership for keeping source extracts current is
@@ -227,6 +266,22 @@ No separate structured CBOM database is maintained. The
 compiled view is ephemeral and recomputed from current
 source technology extracts.
 
+### Minimum Viable Compilation Criteria
+A record should not be treated as usable unless it contains:
+- Record ID (deterministic)
+- System or service
+- Technology / component
+- Asset class
+- Cryptographic function
+- Current algorithm or Unknown
+- Quantum-vulnerable classification
+- Discovery source
+- Evidence reference
+- Source Extract Date
+- Technical owner or explicit Ownership Gap
+- Migration dependency or Unknown
+- Reconciliation status
+
 ## Output Format
 
 Write in crisp direct declarative sentences. No marketing
@@ -238,20 +293,33 @@ Three sentences maximum. State sources used, material coverage
 gaps, highest-priority quantum-vulnerable dependencies or
 drift items, and major migration blockers.
 
-### Section 2 — Compiled PQC-CBOM View
-| Record ID | System | Technology | Asset Class | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Evidence Date |
+### Section 2 — Source Extract Manifest
+| Source | File / Connection | Extract Date | Ingested Date | Scope | Owner | Freshness Status |
+|---|---|---|---|---|---|---|
 
-### Section 3 — Delta View (when prior source snapshots exist)
+Freshness Status values: Current / Aging / Stale / Date Unknown / Source Missing
+
+### Section 3 — Compiled PQC-CBOM View
+| Record ID | System | Technology | Asset Class | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Source Extract Date | Agent Compilation Date | Reconciliation Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+### Section 4 — Delta View (when prior source snapshots exist)
 | Record ID | Change Type | Prior State | Current State | Risk Implication | Required Action | Owner |
+|---|---|---|---|---|---|---|
 
-### Section 4 — Discovery Coverage Matrix (Actual)
+Change Type values include: New / Changed / Removed / Drifted / No Longer Observed
+
+### Section 5 — Discovery Coverage Matrix (Actual)
 | Technology Area | Primary Source Used | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
+|---|---|---|---|---|---|
 
-### Section 5 — Reconciliation Findings
+### Section 6 — Reconciliation Findings
 | Record / Asset | Source A | Source B | Result | Risk | Required Action | Owner |
+|---|---|---|---|---|---|---|
 
-### Section 6 — Migration Dependency & Owner Action View
+### Section 7 — Migration Dependency & Owner Action View
 | Technology | Dependency | Constraint | Prerequisite | Owner | Vendor | Target State | Status |
+|---|---|---|---|---|---|---|---|
 
 ## Quality Benchmark
 A high-quality output recompiles cleanly from current source
@@ -267,15 +335,17 @@ PQC migration planning should begin."
 
 Good output:
 "Agent run 14 Oct 2026 using current Tenable, CA export, and
-SCA extracts. 19 leaf certificates observed live remain absent
-from CA inventory (Shadow). New since last source snapshot:
-OpenSSL 1.1.1 detected in payment API (previously 3.0.x);
-quantum-vulnerable RSA key exchange still present. OT gateway
-firmware remains on ECDSA P-256 with vendor PQC support only
-in v4.x (EOS Q2 2028). Recommend immediate CA reconciliation
-for the 19 Shadow certificates, library upgrade owned by
-Payments Engineering, and OT vendor roadmap validation owned
-by OT Security before capital planning cycle."
+SCA extracts. Source Extract Manifest shows CA export dated
+12 Oct 2026 (Current) and SCA extract dated 3 Sep 2026 (Aging).
+19 leaf certificates observed live remain absent from CA
+inventory (Shadow). New since last source snapshot: OpenSSL
+1.1.1 detected in payment API (previously 3.0.x); quantum-
+vulnerable RSA key exchange still present. OT gateway firmware
+remains on ECDSA P-256 with vendor PQC support only in v4.x
+(EOS Q2 2028). Recommend immediate CA reconciliation for the
+19 Shadow certificates, library upgrade owned by Payments
+Engineering, and OT vendor roadmap validation owned by OT
+Security before capital planning cycle."
 
 ## Known Limitations
 - Quality is bounded by the currency and completeness of the
@@ -312,5 +382,6 @@ by OT Security before capital planning cycle."
 | 1.0 | August 2026 | Initial PQC-CBOM inventory skill |
 | 1.1 | August 2026 | Technology-area Discovery Coverage Matrix; aligned structure to nhi-risk-scorer pattern |
 | 1.2 | August 2026 | Shifted toward living system of record with versioned CBOM, drift detection, and continuous operating model |
-| 1.3 | August 2026 | Architectural pivot: source technology extracts become the system of record; Microsoft 365 Copilot agent acts as on-demand compilation and query engine. Eliminates separately maintained structured CBOM to reduce staleness risk and ongoing overhead |
-| 1.4 | August 2026 | Added explicit PQC-CBOM Asset Classes taxonomy; finalized Microsoft 365 Copilot agent capabilities and limitations language; aligned terminology to “source technology extracts” |
+| 1.3 | August 2026 | Architectural pivot: source technology extracts become the system of record; Microsoft 365 Copilot agent acts as on-demand compilation and query engine |
+| 1.4 | August 2026 | Added explicit PQC-CBOM Asset Classes taxonomy; finalized Microsoft 365 Copilot agent capabilities and limitations language |
+| 1.5 | August 2026 | Material reliability improvements: corrected compatibility and network-access statements; added Source Extract Manifest; deterministic Record ID rule; source precedence rule; minimum viable compilation criteria; explicit Ownership Gap handling; No Longer Observed delta language; Source Extract Date vs Agent Compilation Date; freshness states; clarified compiled view is derived evidence |
