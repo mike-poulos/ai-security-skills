@@ -28,7 +28,7 @@ compatibility: >-
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.5"
+  version: "1.6"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
@@ -42,7 +42,7 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.5 — August 2026
+1.6 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -193,7 +193,16 @@ For each discovered implementation the agent assigns:
 - Cryptographic function(s)
 - Current algorithm(s) and protocol/interface
 - Quantum-vulnerable classification (Yes / No / Partial / Unknown / Not Applicable)
-- PQC target category where determinable (ML-KEM, ML-DSA, SLH-DSA, hybrid, retain + validate dependencies, or Unknown)
+- PQC support evaluated by function where evidence permits:
+  - PQC key-establishment support
+  - PQC digital-signature support
+  - PQC certificate/PKI support
+  - Hybrid mode support
+- If a single PQC Support field is used, set value to
+  `Partially Supported` when support applies to only one
+  function. Treat preview capability as `Preview`, not
+  production-supported. Do not treat a vendor roadmap as
+  deployed support.
 
 ### Step 6 — Multi-Source Reconciliation and Drift Detection
 The agent performs reconciliation across sources using the
@@ -213,13 +222,34 @@ Examples:
 - Vendor claims ↔ deployed product/firmware versions
 - OT assets ↔ protocol and certificate observations
 
-Outcomes: Validated / Shadow / Stale / Conflicting / Unresolved.
+**Allowed Reconciliation Status values only:**
+- Validated
+- Single-Source
+- Shadow
+- Stale
+- Conflicting
+- Unresolved
 
-When prior source snapshots are supplied, the agent also
-produces a delta view (New / Changed / Removed / Drifted /
-No Longer Observed). Classify an absent prior record as
-No Longer Observed until an authoritative source confirms
-removal or decommissioning.
+Do not create combined or free-form values. Record constraints
+and migration blockers in separate fields.
+
+When prior source snapshots are supplied, the agent produces
+a delta view. Change types:
+
+- **New** — record appears for the first time
+- **Configuration Changed** — material algorithm, protocol,
+  certificate, key, product version, owner, configuration,
+  or lifecycle field changed
+- **Observation Refreshed** — only scan metadata changed
+  (scan ID, last-seen date, ingestion date, or evidence
+  reference). Do not treat these as substantive configuration
+  changes.
+- **Drifted** — material change in risk or ownership context
+- **Removed** — authoritative source confirms removal or
+  decommissioning
+- **No Longer Observed** — record was present previously but
+  is absent from current extracts; do not assume decommission
+  until confirmed by an authoritative source
 
 ### Step 7 — Ownership, Migration Dependency, and Priority
 The agent maps technical and business owners (from CMDB or
@@ -266,6 +296,31 @@ No separate structured CBOM database is maintained. The
 compiled view is ephemeral and recomputed from current
 source technology extracts.
 
+### Compiled Record Data Model
+
+| Field | Required | Description / Permitted Values |
+|---|---|---|
+| Record ID | Yes | Deterministic identifier derived from stable source keys |
+| System | Yes | Business service, application, or operational capability |
+| Technology | Yes | Product, platform, library, protocol, or service |
+| Asset Class | Yes | One of the defined PQC-CBOM Asset Classes |
+| Component / Version | Recommended | Specific component, package, firmware, or version |
+| Crypto Function | Yes | Key establishment, digital signature, authentication, etc. |
+| Current Algorithm | Yes | Observed algorithm or Unknown |
+| Protocol | Recommended | TLS, SSH, IPsec, SAML, OIDC, OPC-UA, etc. |
+| Quantum-Vulnerable? | Yes | Yes / No / Partial / Unknown / Not Applicable |
+| PQC Support | Yes | Supported / Partially Supported / Preview / Planned / Unsupported / Unknown / Not Applicable. When Partially Supported, note which function(s). |
+| Discovery Source(s) | Yes | Source(s) that identified the implementation |
+| Evidence Reference | Yes | Source record, file, query, report, or artifact reference |
+| Source Extract Date | Yes | Date the source extract was produced |
+| Agent Compilation Date | Yes | Date the agent compiled this view |
+| Owner | Yes | Named technical owner or Ownership Gap |
+| Migration Dependency | Yes | Specific dependency or Unknown |
+| Disposition | Recommended | Retain and migrate / Upgrade / Refactor / Replace / Isolate / Compensate / Decommission / Investigate |
+| Priority | Recommended | Critical / High / Medium / Low / Unscored |
+| Reconciliation Status | Yes | Validated / Single-Source / Shadow / Stale / Conflicting / Unresolved |
+| Confidence | Recommended | Confirmed / Corroborated / Single-Source / Inferred / Unknown |
+
 ### Minimum Viable Compilation Criteria
 A record should not be treated as usable unless it contains:
 - Record ID (deterministic)
@@ -276,11 +331,26 @@ A record should not be treated as usable unless it contains:
 - Current algorithm or Unknown
 - Quantum-vulnerable classification
 - Discovery source
-- Evidence reference
+- Evidence Reference
 - Source Extract Date
 - Technical owner or explicit Ownership Gap
 - Migration dependency or Unknown
-- Reconciliation status
+- Reconciliation Status (approved value only)
+
+### Pre-Output Validation Gate
+Before producing the final response, verify all of the following:
+
+- Every material conclusion has an Evidence Reference.
+- Every actionable record has an owner or Ownership Gap.
+- Every Reconciliation Status uses an approved value only.
+- PQC Support is not generalized beyond the supported function(s).
+- Vendor roadmap evidence is not represented as deployed capability.
+- Missing or stale sources are disclosed in the Source Extract Manifest.
+- Delta comparisons use only sources that have comparable prior snapshots.
+- Observation Refreshed records are not classified as Configuration Changed.
+- Removed records have authoritative removal evidence; otherwise use No Longer Observed.
+- Executive Summary counts are derived directly from the final Delta View and Compiled CBOM View tables (do not calculate independently).
+- No values or conclusions were invented.
 
 ## Output Format
 
@@ -291,7 +361,8 @@ actions — nothing else.
 ### Section 1 — Executive Summary
 Three sentences maximum. State sources used, material coverage
 gaps, highest-priority quantum-vulnerable dependencies or
-drift items, and major migration blockers.
+drift items, and major migration blockers.  
+All counts must be derived directly from the final output tables.
 
 ### Section 2 — Source Extract Manifest
 | Source | File / Connection | Extract Date | Ingested Date | Scope | Owner | Freshness Status |
@@ -300,14 +371,17 @@ drift items, and major migration blockers.
 Freshness Status values: Current / Aging / Stale / Date Unknown / Source Missing
 
 ### Section 3 — Compiled PQC-CBOM View
-| Record ID | System | Technology | Asset Class | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Owner | Migration Dependency | Disposition | Priority | Source Extract Date | Agent Compilation Date | Reconciliation Status |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Record ID | System | Technology | Asset Class | Component / Version | Crypto Function | Current Algorithm | Protocol | Quantum-Vulnerable? | PQC Support | Discovery Source(s) | Evidence Reference | Source Extract Date | Agent Compilation Date | Owner | Migration Dependency | Disposition | Priority | Reconciliation Status | Confidence |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 ### Section 4 — Delta View (when prior source snapshots exist)
 | Record ID | Change Type | Prior State | Current State | Risk Implication | Required Action | Owner |
 |---|---|---|---|---|---|---|
 
-Change Type values include: New / Changed / Removed / Drifted / No Longer Observed
+Change Type values: New / Configuration Changed / Observation Refreshed / Drifted / Removed / No Longer Observed
+
+Delta summary counts in the Executive Summary must be calculated
+exclusively from this table.
 
 ### Section 5 — Discovery Coverage Matrix (Actual)
 | Technology Area | Primary Source Used | Supporting Sources | Coverage Rating | Known Gap | Follow-Up |
@@ -338,14 +412,14 @@ Good output:
 SCA extracts. Source Extract Manifest shows CA export dated
 12 Oct 2026 (Current) and SCA extract dated 3 Sep 2026 (Aging).
 19 leaf certificates observed live remain absent from CA
-inventory (Shadow). New since last source snapshot: OpenSSL
-1.1.1 detected in payment API (previously 3.0.x); quantum-
-vulnerable RSA key exchange still present. OT gateway firmware
-remains on ECDSA P-256 with vendor PQC support only in v4.x
-(EOS Q2 2028). Recommend immediate CA reconciliation for the
-19 Shadow certificates, library upgrade owned by Payments
-Engineering, and OT vendor roadmap validation owned by OT
-Security before capital planning cycle."
+inventory (Shadow). Configuration Changed: OpenSSL 1.1.1
+detected in payment API (previously 3.0.x); quantum-vulnerable
+RSA key exchange still present. OT gateway firmware remains on
+ECDSA P-256 with vendor PQC support only in v4.x (EOS Q2 2028).
+Recommend immediate CA reconciliation for the 19 Shadow
+certificates, library upgrade owned by Payments Engineering,
+and OT vendor roadmap validation owned by OT Security before
+capital planning cycle."
 
 ## Known Limitations
 - Quality is bounded by the currency and completeness of the
@@ -384,4 +458,5 @@ Security before capital planning cycle."
 | 1.2 | August 2026 | Shifted toward living system of record with versioned CBOM, drift detection, and continuous operating model |
 | 1.3 | August 2026 | Architectural pivot: source technology extracts become the system of record; Microsoft 365 Copilot agent acts as on-demand compilation and query engine |
 | 1.4 | August 2026 | Added explicit PQC-CBOM Asset Classes taxonomy; finalized Microsoft 365 Copilot agent capabilities and limitations language |
-| 1.5 | August 2026 | Material reliability improvements: corrected compatibility and network-access statements; added Source Extract Manifest; deterministic Record ID rule; source precedence rule; minimum viable compilation criteria; explicit Ownership Gap handling; No Longer Observed delta language; Source Extract Date vs Agent Compilation Date; freshness states; clarified compiled view is derived evidence |
+| 1.5 | August 2026 | Material reliability improvements: Source Extract Manifest, deterministic Record ID, source precedence, minimum viable criteria, Ownership Gap handling, No Longer Observed language, date separation, freshness states |
+| 1.6 | August 2026 | Deterministic delta count validation; Configuration Changed vs Observation Refreshed distinction; strict reconciliation-status values; Evidence Reference as required column; function-aware PQC Support handling; formal Compiled Record Data Model; Pre-Output Validation gate |
