@@ -28,7 +28,7 @@ compatibility: >-
 metadata:
   author: mike-poulos
   organization: Windval Technology Solutions
-  version: "1.6"
+  version: "1.7"
   domain: cybersecurity
   subdomain: post-quantum-cryptography
   validated: "false"
@@ -42,7 +42,7 @@ metadata:
 # Skill: PQC Cryptographic Bill of Materials (PQC-CBOM)
 
 ## Version
-1.6 — August 2026
+1.7 — August 2026
 
 ## Author
 Mike Poulos, Executive Advisor — Cybersecurity
@@ -76,6 +76,12 @@ Workflow order remains:
 
 > Source extracts first. Validate and reconcile second.
 > Prioritize third. Enable continuous query and delta fourth.
+
+v1.7 does not add new analysis logic. It enforces the v1.6
+output contract deterministically: schema completeness,
+Manifest completeness, count integrity, and the Pre-Output
+Validation gate. Validation failures must be corrected before
+responding.
 
 ## Background
 A materialized, structured CBOM that depends on ongoing human
@@ -204,6 +210,12 @@ For each discovered implementation the agent assigns:
   production-supported. Do not treat a vendor roadmap as
   deployed support.
 
+Keep these as separate concepts. Do not collapse them:
+- Quantum vulnerability
+- PQC support
+- Migration applicability
+- Vendor roadmap status
+
 ### Step 6 — Multi-Source Reconciliation and Drift Detection
 The agent performs reconciliation across sources using the
 Discovery Coverage Matrix guidance and the following
@@ -230,8 +242,16 @@ Examples:
 - Conflicting
 - Unresolved
 
-Do not create combined or free-form values. Record constraints
-and migration blockers in separate fields.
+Do not create combined or free-form values such as Partially
+Validated, Validated Constraint, Stale Candidate, or
+Unresolved/Stale Candidate. Record constraints and migration
+blockers in separate fields.
+
+Suspected staleness without authoritative evidence is
+classified as Reconciliation Status = Unresolved. Record
+stale-candidate context separately as an assessment note.
+Do not use Stale unless an authoritative source confirms
+the record is no longer current.
 
 When prior source snapshots are supplied, the agent produces
 a delta view. Change types:
@@ -261,6 +281,9 @@ Every actionable record requires a named technical owner.
 If no owner is available from an authoritative source, record
 Ownership Gap and create an assignment action.
 
+Do not classify an evidence gap or reconciliation gap as an
+Ownership Gap when a technical owner is already known.
+
 Prioritization order:
 1. Long-lived sensitive data and HNDL exposure
 2. High-blast-radius trust infrastructure
@@ -277,6 +300,17 @@ The agent returns:
 - Discovery coverage and gap summary
 - Migration dependency and owner action views
 - Natural-language answers to operator and leadership queries
+
+Every source referenced in the compiled view, findings,
+ownership mapping, prioritization, or reconciliation must
+appear in the Source Extract Manifest with a freshness state.
+Source totals must reconcile to the final Manifest.
+
+Do not state that all expected sources are available when any
+expected source is Missing, Date Unknown, Stale, Aging, or
+not represented in the Manifest. If a source classified as
+Aging, Stale, Date Unknown, or Source Missing materially
+affects confidence, disclose it in the Executive Summary.
 
 ### Continuous Operating Model
 A living capability exists when:
@@ -322,34 +356,49 @@ source technology extracts.
 | Confidence | Recommended | Confirmed / Corroborated / Single-Source / Inferred / Unknown |
 
 ### Minimum Viable Compilation Criteria
-A record should not be treated as usable unless it contains:
-- Record ID (deterministic)
-- System or service
-- Technology / component
-- Asset class
-- Cryptographic function
-- Current algorithm or Unknown
-- Quantum-vulnerable classification
-- Discovery source
-- Evidence Reference
-- Source Extract Date
-- Technical owner or explicit Ownership Gap
-- Migration dependency or Unknown
-- Reconciliation Status (approved value only)
+A record should not be treated as usable unless it contains
+every Required field from the Compiled Record Data Model.
 
 ### Pre-Output Validation Gate
-Before producing the final response, verify all of the following:
+Before producing the final response, verify all of the following.
+If any rule fails, correct the output before responding.
+Validation failures must not be silently tolerated.
 
-- Every material conclusion has an Evidence Reference.
-- Every actionable record has an owner or Ownership Gap.
+- Every material conclusion has an Evidence Reference
+  traceable to a supplied source technology extract or
+  authoritative supporting artifact.
+- Every actionable record has a named technical owner or
+  Ownership Gap.
+- An evidence gap or reconciliation gap is not classified as
+  an Ownership Gap when a technical owner is already known.
 - Every Reconciliation Status uses an approved value only.
+- Suspected staleness without authoritative evidence is
+  Unresolved, not Stale.
 - PQC Support is not generalized beyond the supported function(s).
+- Quantum vulnerability, PQC support, migration applicability,
+  and vendor roadmap status remain separate concepts.
 - Vendor roadmap evidence is not represented as deployed capability.
-- Missing or stale sources are disclosed in the Source Extract Manifest.
-- Delta comparisons use only sources that have comparable prior snapshots.
-- Observation Refreshed records are not classified as Configuration Changed.
-- Removed records have authoritative removal evidence; otherwise use No Longer Observed.
-- Executive Summary counts are derived directly from the final Delta View and Compiled CBOM View tables (do not calculate independently).
+- The compiled Component-Level PQC-CBOM includes every Required
+  field from the Compiled Record Data Model.
+- Every source used by the agent appears in the Source Extract
+  Manifest with a freshness state.
+- Source totals reconcile to the final Source Extract Manifest.
+- Do not state that all expected sources are available when any
+  expected source is Missing, Date Unknown, Stale, Aging, or
+  absent from the Manifest.
+- Aging, Stale, Date Unknown, or Source Missing sources that
+  materially affect confidence are disclosed in the Executive
+  Summary.
+- Delta comparisons use only sources that have comparable prior
+  snapshots.
+- Observation Refreshed records are not classified as
+  Configuration Changed.
+- Removed records have authoritative removal evidence;
+  otherwise use No Longer Observed.
+- Every record included in a summary count exists in the
+  applicable detailed output table.
+- Executive Summary counts are derived directly from the final
+  Delta View and Compiled CBOM View tables.
 - No values or conclusions were invented.
 
 ## Output Format
@@ -361,8 +410,9 @@ actions — nothing else.
 ### Section 1 — Executive Summary
 Three sentences maximum. State sources used, material coverage
 gaps, highest-priority quantum-vulnerable dependencies or
-drift items, and major migration blockers.  
+drift items, and major migration blockers.
 All counts must be derived directly from the final output tables.
+Disclose material source-freshness limitations.
 
 ### Section 2 — Source Extract Manifest
 | Source | File / Connection | Extract Date | Ingested Date | Scope | Owner | Freshness Status |
@@ -459,4 +509,5 @@ capital planning cycle."
 | 1.3 | August 2026 | Architectural pivot: source technology extracts become the system of record; Microsoft 365 Copilot agent acts as on-demand compilation and query engine |
 | 1.4 | August 2026 | Added explicit PQC-CBOM Asset Classes taxonomy; finalized Microsoft 365 Copilot agent capabilities and limitations language |
 | 1.5 | August 2026 | Material reliability improvements: Source Extract Manifest, deterministic Record ID, source precedence, minimum viable criteria, Ownership Gap handling, No Longer Observed language, date separation, freshness states |
-| 1.6 | August 2026 | Deterministic delta count validation; Configuration Changed vs Observation Refreshed distinction; strict reconciliation-status values; Evidence Reference as required column; function-aware PQC Support handling; formal Compiled Record Data Model; Pre-Output Validation gate |
+| 1.6 | August 2026 | Output Integrity & Determinism Controls: deterministic delta counts, Configuration Changed vs Observation Refreshed, strict statuses, required Evidence Reference, function-aware PQC Support, formal data model, Pre-Output Validation gate |
+| 1.7 | August 2026 | Output-contract enforcement patch. No new analysis logic. Manifest completeness, required-field enforcement, concept separation, Ownership Gap vs evidence-gap distinction, suspected-staleness = Unresolved, no silent validation failures, Executive Summary freshness disclosure |
